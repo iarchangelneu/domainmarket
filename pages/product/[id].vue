@@ -29,7 +29,7 @@
                     <small>Регистратор домена:</small>
                     <span>{{ product.registrar }}</span>
                 </div>
-                <small ref="apiMessage" class="mb-2">{{ this.apiMessage }}</small>
+                <small ref="apiMessage" class="mb-2">{{ apiMessage }}</small>
                 <button @click="addToCart(product.id)" ref="cartBtn">В КОРЗИНУ</button>
 
 
