@@ -624,6 +624,7 @@ useSeoMeta({
                 line-height: normal;
                 font-family: var(--cera);
                 color: #fff;
+                transition: all .3s ease;
             }
 
             img {
@@ -631,6 +632,9 @@ useSeoMeta({
             }
 
 
+            &:hover p {
+                transform: scale(1.1);
+            }
 
             &:hover img {
                 transform: scale(1.3);
