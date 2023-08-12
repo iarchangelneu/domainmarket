@@ -168,15 +168,17 @@ export default {
 
         },
         onSocketMessage(event) {
+            ;
             const msg = JSON.parse(event.data);
             if (msg.type === 'chat.message' && msg.messages) {
-                // Обновляем массив messages, добавляя новые сообщения
-                this.messages.push(...msg.messages);
-                this.getChats()
+                // Добавляем только последнее сообщение
+                const lastMessage = msg.messages[msg.messages.length - 1];
+                this.messages.push(lastMessage);
+                this.getChats();
             } else {
                 // Обновляем массив messages, заменяя его содержимое на новое
                 this.messages = msg;
-                this.getChats()
+                this.getChats();
             }
 
             this.$nextTick(() => {
