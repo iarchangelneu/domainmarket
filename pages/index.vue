@@ -24,6 +24,7 @@
                                 aria-describedby="basic-addon1">
                         </div>
                         <button>НАЙТИ</button>
+                        <button class="searchbtn"><img src="@/assets/img/searchico.svg" alt=""></button>
                     </div>
                 </div>
             </div>
@@ -57,6 +58,10 @@
 
 
             </div>
+
+            <div class="showall text-right">
+                <NuxtLink to="/">СМОТРЕТЬ ВСЕ</NuxtLink>
+            </div>
         </div>
 
         <div class="safety">
@@ -84,7 +89,21 @@
             <h1>ОТЗЫВЫ ПОЛЬЗОВАТЕЛЕЙ</h1>
 
             <swiper :slidesPerView="2" :spaceBetween="30" :centeredSlides="true" :loop="true" :pagination="pagination"
-                :navigation="navigation" :modules="modules" class="mySwiper">
+                :navigation="navigation" :modules="modules" class="mySwiper" :breakpoints="{
+                    1026: {
+                        slidesPerView: 2,
+                        centeredSlides: true,
+                    },
+                    300: {
+                        slidesPerView: 1,
+                        centeredSlides: false,
+                        pagination: false,
+                        navigation: {
+                            prevEl: '.prev2',
+                            nextEl: '.next2',
+                        }
+                    }
+                }">
                 <swiper-slide>
                     <div class="slide">
                         <div class="name d-flex justify-content-between align-items-center">
@@ -137,13 +156,17 @@
                 <img src="@/assets/img/prev.svg" class="prev" style="cursor: pointer;" alt="">
                 <img src="@/assets/img/next.svg" class="next" style="cursor: pointer;" alt="">
             </swiper>
+            <div class="sales__navigation">
+                <img src="@/assets/img/prev2.svg" class="prev2" style="cursor: pointer;" alt="">
+                <img src="@/assets/img/next2.svg" class="next2" style="cursor: pointer;" alt="">
+            </div>
             <div class="sales-pagination"></div>
         </div>
 
         <div class="faq">
             <h1>частые вопросы</h1>
 
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end crap">
                 <div class="faq__body">
                     <div class="faq__item">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample0"
@@ -339,6 +362,10 @@ useSeoMeta({
 .faq {
     margin-top: 84px;
 
+    @media (max-width: 1024px) {
+        margin-top: 30px;
+    }
+
     h1 {
         font-size: 48px;
         font-style: normal;
@@ -348,52 +375,89 @@ useSeoMeta({
         color: #fff;
         font-family: var(--cera);
         margin-bottom: 24px;
+
+        @media (max-width: 1024px) {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
     }
 
-    .faq__body {
-        .faq__item {
-            padding: 0 0 10px;
-            border-bottom: 1px solid #fff;
-            margin-bottom: 24px;
+    .crap {
 
-            button {
+        @media (max-width: 1024px) {
+            width: 100%;
+            justify-content: flex-start !important;
+        }
+
+        .faq__body {
+
+            @media (max-width: 1024px) {
                 width: 100%;
-                text-align: left;
-                background: transparent !important;
-                border: 0;
-                font-size: 18px;
-                font-style: normal;
-                font-weight: 500;
-                line-height: normal;
-                font-family: var(--cera);
-                color: #fff;
-                outline: 0 !important;
-                box-shadow: none !important;
-                width: 53.385vw;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0;
             }
 
-            .card-body {
-                max-width: 53.385vw;
-                background: transparent;
-                padding-left: 0;
-                padding-bottom: 0;
+            .faq__item {
 
-                p {
-                    font-size: 18px;
-                    font-style: normal;
-                    font-weight: 400;
-                    line-height: 150%;
-                    font-family: var(--cera);
-                    color: #fff;
-
+                @media (max-width: 1024px) {
+                    width: 100%;
                 }
 
-                p:last-child {
-                    margin-bottom: 0;
+                padding: 0 0 10px;
+                border-bottom: 1px solid #fff;
+                margin-bottom: 24px;
+
+                button {
+                    width: 100%;
+                    text-align: left;
+                    background: transparent !important;
+                    border: 0;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    font-family: var(--cera);
+                    color: #fff;
+                    outline: 0 !important;
+                    box-shadow: none !important;
+                    width: 53.385vw;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0;
+
+                    @media (max-width: 1024px) {
+                        width: 100%;
+                        font-size: 16px;
+                    }
+                }
+
+                .card-body {
+                    max-width: 53.385vw;
+                    background: transparent;
+                    padding-left: 0;
+                    padding-bottom: 0;
+
+                    @media (max-width: 1024px) {
+                        max-width: 100%;
+                    }
+
+                    p {
+                        font-size: 18px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 150%;
+                        font-family: var(--cera);
+                        color: #fff;
+
+                        @media (max-width: 1024px) {
+                            font-size: 16px;
+                        }
+
+                    }
+
+                    p:last-child {
+                        margin-bottom: 0;
+                    }
                 }
             }
         }
@@ -404,6 +468,10 @@ useSeoMeta({
     position: relative;
     margin: 84px -150px 0;
 
+    @media (max-width: 1024px) {
+        margin: 30px 0 0;
+    }
+
     .swiper-pagination-fraction,
     .swiper-pagination-custom,
     .swiper-horizontal>.swiper-pagination-bullets,
@@ -413,12 +481,27 @@ useSeoMeta({
         margin-top: 42px;
     }
 
+    .sales__navigation {
+        display: none;
+        margin-top: 10px;
+
+        @media (max-width: 1024px) {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+        }
+    }
+
     .prev {
         position: absolute;
         left: 15%;
         top: 40%;
         z-index: 10;
         transition: all .3s ease;
+
+        @media (max-width: 1024px) {
+            display: none;
+        }
     }
 
     .next {
@@ -427,6 +510,10 @@ useSeoMeta({
         top: 40%;
         z-index: 10;
         transition: all .3s ease;
+
+        @media (max-width: 1024px) {
+            display: none;
+        }
     }
 
     .swiper-button-disabled {
@@ -447,6 +534,12 @@ useSeoMeta({
         color: #fff;
         margin-bottom: 48px;
         padding: 0 0 0 150px;
+
+        @media (max-width: 1024px) {
+            font-size: 24px;
+            padding: 0 0 0 20px;
+            margin-bottom: 20px;
+        }
     }
 
     .slide {
@@ -455,9 +548,16 @@ useSeoMeta({
         padding: 40px;
         width: 100%;
         height: 311px;
+
+        @media (max-width: 1024px) {
+            padding: 16px 20px;
+            height: 280px;
+        }
     }
 
     .name {
+
+
         span {
             font-size: 24px;
             font-style: normal;
@@ -465,6 +565,10 @@ useSeoMeta({
             line-height: 120%;
             font-family: var(--cera);
             color: #333;
+
+            @media (max-width: 1024px) {
+                font-size: 20px;
+            }
         }
 
         small {
@@ -475,6 +579,10 @@ useSeoMeta({
             font-family: var(--cera);
             color: #333;
             opacity: 0.3;
+
+            @media (max-width: 1024px) {
+                font-size: 16px;
+            }
         }
     }
 
@@ -493,6 +601,10 @@ useSeoMeta({
 .safety {
     margin-top: 84px;
 
+    @media (max-width: 1024px) {
+        margin-top: 30px;
+    }
+
     h1 {
         font-size: 48px;
         font-style: normal;
@@ -502,6 +614,11 @@ useSeoMeta({
         font-family: var(--cera);
         color: #fff;
         margin-bottom: 36px;
+
+        @media (max-width: 1024px) {
+            font-size: 24px;
+            margin-bottom: 0;
+        }
     }
 
     div {
@@ -509,12 +626,20 @@ useSeoMeta({
         //align-items: flex-start;
         justify-content: space-between;
 
+        img {
+            @media (max-width: 1024px) {
+                display: none;
+            }
+        }
+
 
         div {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: flex-end;
+
+
 
             p {
                 font-size: 18px;
@@ -525,6 +650,16 @@ useSeoMeta({
                 color: #fff;
                 margin-top: 103px;
                 max-width: 851px;
+
+                @media (max-width: 1300px) {
+                    font-size: 16px;
+                }
+
+                @media (max-width: 1024px) {
+                    margin-top: 20px;
+                    font-size: 16px;
+                    line-height: 130%;
+                }
             }
 
             div {
@@ -535,6 +670,7 @@ useSeoMeta({
                     border: 2px solid #FFF;
                     padding: 10px 40px;
                     background: transparent;
+                    display: inline-block;
 
                     font-size: 18px;
                     font-style: normal;
@@ -545,9 +681,15 @@ useSeoMeta({
                     text-decoration: none;
                     transition: all .3s ease;
 
+
                     &:hover {
                         color: #000;
                         background: #fff;
+                    }
+
+                    @media (max-width: 1024px) {
+                        margin-top: 20px;
+                        font-size: 16px;
                     }
                 }
             }
@@ -562,6 +704,17 @@ useSeoMeta({
     margin-top: 270px;
     gap: 30px 174px;
 
+    @media (max-width: 1500px) {
+        gap: 0;
+        justify-content: space-between;
+        margin-top: 100px;
+    }
+
+    @media (max-width: 1024px) {
+        margin-top: 34px;
+        flex-direction: column;
+    }
+
     h1 {
         font-size: 48px;
         font-style: normal;
@@ -571,6 +724,42 @@ useSeoMeta({
         font-family: var(--cera);
         color: #fff;
         margin-bottom: 0;
+
+        @media (max-width: 1024px) {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    }
+
+    .showall {
+        display: none;
+
+        @media (max-width: 1024px) {
+            display: block;
+            margin-top: 20px;
+
+            a {
+                border-radius: 10px;
+                border: 2px solid #fff;
+                padding: 10px 20px;
+                background: transparent;
+                display: inline-block;
+
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                font-family: var(--cera);
+                color: #fff;
+                transition: all .3s ease;
+                text-decoration: none;
+
+                &:hover {
+                    color: #000;
+                    background: #fff;
+                }
+            }
+        }
     }
 
     .trap {
@@ -586,6 +775,7 @@ useSeoMeta({
             text-align: center;
             text-decoration: none;
 
+
             font-size: 18px;
             font-style: normal;
             font-weight: 500;
@@ -593,6 +783,10 @@ useSeoMeta({
             color: #Fff;
             font-family: var(--cera);
             transition: all .3s ease;
+
+            @media (max-width: 1024px) {
+                display: none;
+            }
 
             &:hover {
                 color: #000;
@@ -606,6 +800,12 @@ useSeoMeta({
         flex-wrap: wrap;
         gap: 36px;
         width: 100%;
+
+        @media (max-width: 1500px) {
+            justify-content: center;
+        }
+
+
 
         .catalog__item {
             padding: 8px;
@@ -625,6 +825,10 @@ useSeoMeta({
                 font-family: var(--cera);
                 color: #fff;
                 transition: all .3s ease;
+
+                @media (max-width: 1024px) {
+                    font-size: 16px;
+                }
             }
 
             img {
@@ -645,15 +849,33 @@ useSeoMeta({
 
 .home {
     padding: 150px 150px 72px;
+
+    @media(max-width: 1500px) {
+        padding: 150px 50px 72px;
+    }
+
+    @media (max-width: 1024px) {
+        padding: 120px 20px 50px;
+    }
 }
 
 .main {
+    @media (max-width: 1024px) {
+        flex-direction: column;
+    }
+
     .parallax {
         position: relative;
 
         img {
             z-index: 10;
             position: relative;
+
+            @media (max-width: 1024px) {
+                max-width: 100%;
+                height: auto;
+
+            }
         }
 
         span {
@@ -668,6 +890,14 @@ useSeoMeta({
                 left: -3.5% !important;
                 top: 32% !important;
                 z-index: 1;
+
+                @media (max-width: 1300px) {
+                    font-size: 50px;
+                }
+
+                @media (max-width: 1024px) {
+                    font-size: 41px;
+                }
             }
 
             &:nth-child(3) {
@@ -675,6 +905,14 @@ useSeoMeta({
                 font-weight: 300;
                 left: 18% !important;
                 top: 55% !important;
+
+                @media (max-width: 1300px) {
+                    font-size: 30px;
+                }
+
+                @media (max-width: 1024px) {
+                    font-size: 23px;
+                }
             }
 
             &:nth-child(4) {
@@ -683,6 +921,14 @@ useSeoMeta({
                 left: 17.3% !important;
                 bottom: 18% !important;
                 top: unset !important;
+
+                @media (max-width: 1300px) {
+                    font-size: 35px;
+                }
+
+                @media (max-width: 1024px) {
+                    font-size: 27px;
+                }
             }
 
             &:nth-child(5) {
@@ -691,6 +937,14 @@ useSeoMeta({
                 top: 45% !important;
                 left: 45% !important;
                 z-index: 11;
+
+                @media (max-width: 1300px) {
+                    font-size: 50px;
+                }
+
+                @media (max-width: 1024px) {
+                    font-size: 41px;
+                }
             }
 
             &:nth-child(6) {
@@ -700,6 +954,14 @@ useSeoMeta({
                 top: 13% !important;
                 left: unset !important;
                 z-index: 11;
+
+                @media (max-width: 1300px) {
+                    font-size: 55px;
+                }
+
+                @media (max-width: 1024px) {
+                    display: none !important;
+                }
             }
 
             &:nth-child(7) {
@@ -709,6 +971,14 @@ useSeoMeta({
                 top: 35% !important;
                 left: unset !important;
                 z-index: 11;
+
+                @media (max-width: 1300px) {
+                    font-size: 55px;
+                }
+
+                @media (max-width: 1024px) {
+                    font-size: 37px;
+                }
             }
 
             &:nth-child(8) {
@@ -719,6 +989,14 @@ useSeoMeta({
                 left: unset !important;
                 top: unset !important;
                 z-index: 11;
+
+                @media (max-width: 1300px) {
+                    font-size: 55px;
+                }
+
+                @media (max-width: 1024px) {
+                    font-size: 37px;
+                }
             }
         }
 
@@ -733,6 +1011,19 @@ useSeoMeta({
             line-height: normal;
             color: #fff;
             font-family: var(--cera);
+
+            @media (max-width: 1500px) {
+                font-size: 50px;
+            }
+
+            @media (max-width: 1300px) {
+                font-size: 40px;
+            }
+
+            @media (max-width: 1024px) {
+                font-size: 24px;
+                margin-bottom: 0;
+            }
         }
 
         h1 {
@@ -744,6 +1035,19 @@ useSeoMeta({
             color: #fff;
             display: inline;
             position: relative;
+
+            @media (max-width: 1500px) {
+                font-size: 50px;
+            }
+
+            @media (max-width: 1300px) {
+                font-size: 40px;
+            }
+
+            @media (max-width: 1024px) {
+                font-size: 24px;
+                margin-bottom: 0;
+            }
 
             span {
                 background: linear-gradient(180deg, #D675DB 0%, #0051A3 100%);
@@ -759,6 +1063,12 @@ useSeoMeta({
                 right: 0;
                 bottom: -10%;
                 z-index: 0;
+
+                @media (max-width: 1500px) {
+                    width: 45%;
+                    height: auto;
+                }
+
             }
         }
 
@@ -766,6 +1076,10 @@ useSeoMeta({
 
     .search {
         margin-top: 100px;
+
+        @media (max-width: 1024px) {
+            margin-top: 20px;
+        }
 
         p {
             font-size: 18px;
@@ -775,6 +1089,11 @@ useSeoMeta({
             font-family: var(--cera);
             color: #fff;
             max-width: 578px;
+
+            @media (max-width: 1300px) {
+                font-size: 16px;
+            }
+
         }
 
         input {
@@ -794,6 +1113,12 @@ useSeoMeta({
             color: #fff;
             font-family: var(--cera);
             height: 44px;
+
+            @media (max-width: 1024px) {
+
+                border-left: 2px solid #fff;
+                border-radius: 10px !important;
+            }
         }
 
         .input-group-text {
@@ -806,6 +1131,21 @@ useSeoMeta({
             background: transparent;
             padding: 0;
             height: 44px;
+
+            @media (max-width: 1024px) {
+                display: none;
+            }
+        }
+
+        .searchbtn {
+            display: none;
+
+            @media (max-width: 1024px) {
+                display: block;
+                background: #fff;
+                color: #fff;
+                padding: 5px 14px 9px;
+            }
         }
 
         button {
@@ -824,6 +1164,10 @@ useSeoMeta({
             background: transparent;
             margin-left: 10px;
             transition: all .3s ease;
+
+            @media (max-width: 1024px) {
+                display: none;
+            }
         }
 
         button:hover {
