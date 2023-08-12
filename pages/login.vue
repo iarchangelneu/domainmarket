@@ -10,7 +10,7 @@
                 <input type="password" name="password" id="password" v-model="password" placeholder="Пароль">
 
 
-                <button class="w-100 reg">ВОЙТИ</button>
+                <button class="w-100 reg" @click="login()">ВОЙТИ</button>
 
                 <div class="text-center haveacc">
                     <span>Ещё нет аккаунта? <NuxtLink to="/register">Регистрация</NuxtLink></span>
@@ -20,21 +20,44 @@
     </div>
 </template>
 <script>
+
+import global from '~/mixins/global';
+import axios from 'axios';
 export default {
+    mixins: [global],
     data() {
         return {
             username: '',
             password: '',
-            activeSwitchPosition: '50%',
+            pathUrl: 'https://d-market.kz',
         }
     },
     methods: {
-        switchLeft() {
-            this.activeSwitchPosition = '0%';
-        },
-        switchRight() {
-            this.activeSwitchPosition = '50%';
-        },
+        login() {
+            const path = `${this.pathUrl}/api/main/authorization`
+            // const csrf = this.getCSRFToken()
+
+            // axios.defaults.headers.common['X-CSRFToken'] = csrf;
+            axios
+                .post(path, { username: this.username, password: this.password })
+                .then((res) => {
+
+                    if (res.status == 202) {
+
+                        document.cookie = `Authorization=${res.data.token}; expires=Fri, 31 Dec 2023 23:59:59 GMT; path=/`;
+                        localStorage.setItem('accountType', res.data.redirect_url)
+                        window.location.href = res.data.redirect_url
+                    }
+                    else {
+
+                    }
+                    console.log(res)
+                })
+                .catch((error) => {
+                    console.log(error);
+                    // this.error = error.response.data.non_field_errors[0]
+                });
+        }
     }
 }
 </script>

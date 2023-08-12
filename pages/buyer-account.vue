@@ -14,27 +14,30 @@
         </div>
 
         <div class="sales products" v-if="tab == 0">
-            <div class="products__empty" v-if="products.length <= 0">
-                <h1>У ВАС ПОКА ЧТО НЕ БЫЛО ПРОДАЖ</h1>
+            <div class="products__empty" v-if="buys.length <= 0">
+                <h1>У ВАС ПОКА ЧТО НЕ БЫЛО ПОКУПОК</h1>
             </div>
             <div class="products__body" v-else>
-                <div class="catalog__item" v-for="(product, i) in products" :key="product.i">
+                <div class="catalog__item" v-for="(buy, i) in buys" :key="buy.id">
                     <div class="name">
                         <div>
                             <small>{{ i + 1 }}.</small>
-                            <p>{{ product.name }}</p>
+                            <p>{{ buy.products.name }}</p>
                         </div>
-                        <span>{{ product.price.toLocaleString() }} ₸</span>
+                        <span>{{ buy.products.price.toLocaleString() }} ₸</span>
                     </div>
                     <div class="links">
-                        <button @click="tab = 7">ЧАТ С ПРОДАВЦОМ</button>
-                        <NuxtLink to="/product">СТРАНИЦА ТОВАРА</NuxtLink>
+                        <button @click='createChat(buy.seller.id, buy.seller.user.first_name)'>ЧАТ С ПРОДАВЦОМ</button>
+                        <!-- <NuxtLink :to="'/product/' + buy.products.id">СТРАНИЦА ТОВАРА</NuxtLink> -->
                     </div>
                 </div>
             </div>
         </div>
         <div class="chats" v-if="tab == 3">
-            <div class="chats__body">
+            <div class="chat__empty" v-if="chats.length <= 0">
+                <h1>У ВАС ПОКА НЕ БЫЛО ЧАТОВ</h1>
+            </div>
+            <div class="chats__body" v-else>
                 <div class="chats__item">
                     <div class="name">
                         <span>alex.ivanov@gmail.com</span>
@@ -44,33 +47,7 @@
                         <button @click="tab = 7">ОТКРЫТЬ ЧАТ</button>
                     </div>
                 </div>
-                <div class="chats__item">
-                    <div class="name">
-                        <span>alex.ivanov@gmail.com</span>
-                        <small>23.07.2023 14:47</small>
-                    </div>
-                    <div class="text-right">
-                        <button @click="tab = 7">ОТКРЫТЬ ЧАТ</button>
-                    </div>
-                </div>
-                <div class="chats__item">
-                    <div class="name">
-                        <span>alex.ivanov@gmail.com</span>
-                        <small>23.07.2023 14:47</small>
-                    </div>
-                    <div class="text-right">
-                        <button @click="tab = 7">ОТКРЫТЬ ЧАТ</button>
-                    </div>
-                </div>
-                <div class="chats__item">
-                    <div class="name">
-                        <span>alex.ivanov@gmail.com</span>
-                        <small>23.07.2023 14:47</small>
-                    </div>
-                    <div class="text-right">
-                        <button @click="tab = 7">ОТКРЫТЬ ЧАТ</button>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div class="account__info" v-if="tab == 4">
@@ -87,51 +64,103 @@
             </div>
 
             <div class="text-center">
-                <button>ВЫЙТИ ИЗ АККАУНТА</button>
+                <button @click="logOut()">ВЫЙТИ ИЗ АККАУНТА</button>
             </div>
 
         </div>
-        <TheMessanger v-if="tab == 7"></TheMessanger>
+        <TheMessanger v-if="tab == 7" :chatId="chatId" :name="chatName"></TheMessanger>
         <TheTrans v-if="tab == 2"></TheTrans>
     </div>
 </template>
 <script>
+import global from '~/mixins/global';
+import axios from 'axios';
 export default {
+    mixins: [global],
     data() {
         return {
             tab: 0,
-            products: [
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-            ]
+            pathUrl: 'https://d-market.kz',
+            myId: null,
+            account: [],
+            transactions: [],
+            buys: [],
+            chats: [],
         }
     },
+    methods: {
+        getAccount() {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/buyer/buyer-lk`;
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios
+                .get(path)
+                .then(response => {
+                    this.account = response.data
+                    this.myId = response.data.id
+                    this.transactions = response.data.transactions
+
+
+                })
+                .catch(error => console.log(error));
+        },
+        openChat(chatId, chatName) {
+            this.tab = 7;
+            this.chatId = chatId;
+            this.chatName = chatName
+        },
+        getBuys() {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/buyer/buyer-lk/my-purchases`
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios
+                .get(path)
+                .then(response => {
+                    this.buys = response.data
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+        },
+        createChat(id, name) {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/messanger/new-chat`
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios
+                .post(path, {
+                    buyer: this.myId,
+                    seller: id,
+                })
+                .then(response => {
+                    const chatId = response.data.chat_id
+                    this.openChat(chatId, name)
+                })
+                .catch(error => console.log(error))
+        },
+        getChats() {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/messanger/all-chats`
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios
+                .get(path)
+                .then(res => {
+                    this.chats = res.data
+                })
+                .catch(error => console.log(error))
+        }
+    },
+    mounted() {
+        const accType = localStorage.getItem('accountType')
+        console.log(accType)
+        if (accType == 'buyer-account') {
+            this.getAccount()
+            this.getChats()
+            this.getBuys()
+        }
+        else {
+            window.location.href = '/login'
+        }
+    }
 }
 </script>
 <script setup>
@@ -144,6 +173,20 @@ useSeoMeta({
 </script>
 
 <style lang="scss" scoped>
+.chat__empty {
+    margin-top: 100px;
+
+    h1 {
+        font-size: 24px !important;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%;
+        color: #fff;
+        font-family: var(--cera);
+        text-align: center;
+    }
+}
+
 .account__info {
     margin-top: 150px;
     width: 100%;
@@ -193,6 +236,7 @@ useSeoMeta({
             border: 3px solid #FFF;
             font-family: var(--cera);
             color: #fff;
+            background: transparent;
             padding: 12px 20px;
             font-size: 18px;
             font-style: normal;

@@ -27,7 +27,7 @@
                     </p>
                 </label>
 
-                <button class="w-100 reg">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                <button class="w-100 reg" @click="register()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
 
                 <div class="text-center haveacc">
                     <span>Уже есть аккаунт? <NuxtLink to="/login">Вход</NuxtLink></span>
@@ -37,12 +37,16 @@
     </div>
 </template>
 <script>
+import global from '~/mixins/global';
+import axios from 'axios';
 export default {
+    mixins: [global],
     data() {
         return {
             username: '',
             password: '',
             activeSwitchPosition: '50%',
+            pathUrl: 'https://d-market.kz',
         }
     },
     methods: {
@@ -51,6 +55,36 @@ export default {
         },
         switchRight() {
             this.activeSwitchPosition = '50%';
+        },
+        register() {
+            const buyer = `${this.pathUrl}/api/main/registration/buyer`
+            const seller = `${this.pathUrl}/api/main/registration/seller`
+            if (this.activeSwitchPosition == '50%') {
+                axios
+                    .post(seller, { email: this.username, password: this.password, username: this.username })
+                    .then((res) => {
+                        document.cookie = `Authorization=${res.data.token}; expires=Fri, 31 Dec 2023 23:59:59 GMT; path=/`;
+                        console.log(res)
+                        localStorage.setItem('accountType', res.data.redirect_url)
+                        window.location.href = res.data.redirect_url
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
+            else {
+                axios
+                    .post(buyer, { email: this.username, password: this.password, username: this.username })
+                    .then((res) => {
+                        document.cookie = `Authorization=${res.data.token}; expires=Fri, 31 Dec 2023 23:59:59 GMT; path=/`;
+                        console.log(res)
+                        localStorage.setItem('accountType', res.data.redirect_url)
+                        window.location.href = res.data.redirect_url
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
         },
     }
 }
@@ -88,7 +122,7 @@ useSeoMeta({
 
             input {
                 display: block;
-                width: 501px;
+                width: 100%;
                 margin-bottom: 20px;
                 padding: 12px 23px;
                 border-radius: 10px;

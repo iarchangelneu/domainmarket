@@ -3,12 +3,13 @@
         <div class="create__body">
             <div class="left__side">
                 <div class="input__body">
-                    <label for="name">Название домена</label>
-                    <input type="text" id="name" placeholder="Введите название домена" v-model="name">
+                    <label for="name">Название домена *</label>
+                    <input type="text" id="name" placeholder="Введите название домена" v-model="name"
+                        @input="extractDomainZone">
                 </div>
                 <div class="d-flex align-items-center category__select">
                     <div>
-                        <label for="category">Выберите категорию</label>
+                        <label for="category">Выберите категорию *</label>
                         <select name="add_category" id="category" v-model="selectedCategory" :disabled="hasSelectedCategory"
                             required>
                             <option value="" disabled>Выбор категории</option>
@@ -34,7 +35,7 @@
                         <input type="number" id="price" placeholder="Цена за товар" v-model="price">
                     </div>
                     <div>
-                        <label for="reg">Регистратор домена</label>
+                        <label for="reg">Регистратор домена *</label>
                         <input type="text" id="reg" placeholder="Введите название регистратора" v-model="registrator">
                     </div>
                 </div>
@@ -47,12 +48,18 @@
         </div>
 
         <div class="text-center">
-            <button>ОПУБЛИКОВАТЬ ТОВАР</button>
+            <button @click="createProduct" ref="createBtn">ОПУБЛИКОВАТЬ ТОВАР</button>
         </div>
     </div>
 </template>
 <script>
+import global from '~/mixins/global';
+import axios from 'axios';
 export default {
+    mixins: [global],
+    props: {
+        productId: Number,
+    },
     data() {
         return {
             name: '',
@@ -72,14 +79,74 @@ export default {
             ],
             selectedCategory: null,
             selectedCategories: [],
+            price: null,
+            registrator: '',
             description: '',
+            first_domain: '',
+            pathUrl: 'https://d-market.kz',
         }
     },
     methods: {
+        extractDomainZone() {
+            const domainParts = this.name.split('.');
+            if (domainParts.length >= 2) {
+                this.first_domain = `.${domainParts[domainParts.length - 1]}`;
+                console.log(this.first_domain)
+            } else {
+                this.first_domain = '';
+            }
+        },
         removeCategory() {
             this.selectedCategories.splice(0, 1);
             this.selectedCategory = null;
         },
+        getProduct() {
+            const path = `${this.pathUrl}/api/seller/seller-lk/edit-product/${this.productId}`
+            axios
+                .get(path)
+                .then(response => {
+                    this.description = response.data.description
+                    this.name = response.data.name
+                    this.price = response.data.price
+                    this.first_domain = response.data.first_domain
+                    this.registrator = response.data.registrar
+                    this.selectedCategory = response.data.category - 1
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+        },
+        createProduct() {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/seller/seller-lk/edit-product/${this.productId}`
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+
+            this.$refs.createBtn.innerHTML = 'Сохраняем'
+
+            axios
+                .put(path, {
+                    category: this.selectedCategory + 1,
+                    name: this.name,
+                    first_domain: this.first_domain,
+                    registrar: this.registrator,
+                    price: this.price,
+                    description: this.description
+
+
+                })
+                .then(res => {
+                    if (res.status == 200) {
+                        this.$refs.createBtn.innerHTML = 'Товар успешно сохранен'
+                        this.$refs.createBtn.disabled = true
+                    }
+                })
+                .catch(error =>
+                    console.log(error)
+
+                )
+
+
+        }
     },
     computed: {
         hasSelectedCategory() {
@@ -93,6 +160,9 @@ export default {
             }
         },
     },
+    mounted() {
+        this.getProduct()
+    }
 }
 </script>
 <script setup>

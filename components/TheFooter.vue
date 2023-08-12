@@ -31,7 +31,7 @@ export default {
 <style lang="scss" scoped>
 footer {
     border-radius: 20px;
-    background: #FFF;
+    background: transparent;
     margin: 30px;
     padding: 34px 120px;
 
@@ -51,7 +51,7 @@ footer {
                 line-height: normal;
                 text-transform: uppercase;
                 font-family: var(--cera);
-                color: #000;
+                color: #fff;
                 text-decoration: none;
             }
         }
@@ -65,12 +65,12 @@ footer {
             font-style: normal;
             font-weight: 400;
             line-height: 150%;
-            color: #000;
+            color: #fff;
             font-family: var(--cera);
             margin-bottom: 0;
 
             a {
-                color: #000;
+                color: #fff;
                 text-decoration: underline;
             }
         }

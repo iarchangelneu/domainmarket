@@ -18,10 +18,6 @@
         <div class="products" v-if="tab == 0">
             <div class="products__filter">
                 <button @click="tab = 5">ДОБАВИТЬ ТОВАР</button>
-                <button>
-                    <span>ФИЛЬТРЫ</span>
-                    <img src="@/assets/img/filtersarrow.svg" alt="">
-                </button>
             </div>
             <div class="products__empty" v-if="products.length <= 0">
                 <h1>У ВАС ПОКА ЧТО НЕ ЗАГРУЖЕНО НИ ОДНОГО ТОВАРА.
@@ -37,35 +33,38 @@
                         <span>{{ product.price.toLocaleString() }} ₸</span>
                     </div>
                     <div class="links">
-                        <button @click="tab = 6">ИЗМЕНИТЬ</button>
-                        <NuxtLink to="/product">СТРАНИЦА ТОВАРА</NuxtLink>
+                        <button @click='openEditTab(product.id)'>ИЗМЕНИТЬ</button>
+                        <NuxtLink :to="'/product/' + product.id">СТРАНИЦА ТОВАРА</NuxtLink>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="sales products" v-if="tab == 1">
-            <div class="products__empty" v-if="products.length <= 0">
+            <div class="products__empty" v-if="sales.length <= 0">
                 <h1>У ВАС ПОКА ЧТО НЕ БЫЛО ПРОДАЖ</h1>
             </div>
             <div class="products__body" v-else>
-                <div class="catalog__item" v-for="(product, i) in products" :key="product.i">
+                <div class="catalog__item" v-for="(sale, i) in sales" :key="sale.id">
                     <div class="name">
                         <div>
                             <small>{{ i + 1 }}.</small>
-                            <p>{{ product.name }}</p>
+                            <p>{{ sale.products.name }}</p>
                         </div>
-                        <span>{{ product.price.toLocaleString() }} ₸</span>
+                        <span>{{ sale.products.price.toLocaleString() }} ₸</span>
                     </div>
                     <div class="links">
-                        <button @click="tab = 7">ЧАТ С ПОКУПАТЕЛЕМ</button>
+                        <button @click='createChat(sale.buyer.id, sale.buyer.user.email)'>ЧАТ С ПОКУПАТЕЛЕМ</button>
                         <NuxtLink to="/product">СТРАНИЦА ТОВАРА</NuxtLink>
                     </div>
                 </div>
             </div>
         </div>
         <div class="chats" v-if="tab == 3">
-            <div class="chats__body">
+            <div class="chat__empty" v-if="chats.length <= 0">
+                <h1>У ВАС ПОКА НЕ БЫЛО ЧАТОВ</h1>
+            </div>
+            <div class="chats__body" v-else>
                 <div class="chats__item">
                     <div class="name">
                         <span>alex.ivanov@gmail.com</span>
@@ -75,33 +74,7 @@
                         <button @click="tab = 7">ОТКРЫТЬ ЧАТ</button>
                     </div>
                 </div>
-                <div class="chats__item">
-                    <div class="name">
-                        <span>alex.ivanov@gmail.com</span>
-                        <small>23.07.2023 14:47</small>
-                    </div>
-                    <div class="text-right">
-                        <button @click="tab = 7">ОТКРЫТЬ ЧАТ</button>
-                    </div>
-                </div>
-                <div class="chats__item">
-                    <div class="name">
-                        <span>alex.ivanov@gmail.com</span>
-                        <small>23.07.2023 14:47</small>
-                    </div>
-                    <div class="text-right">
-                        <button @click="tab = 7">ОТКРЫТЬ ЧАТ</button>
-                    </div>
-                </div>
-                <div class="chats__item">
-                    <div class="name">
-                        <span>alex.ivanov@gmail.com</span>
-                        <small>23.07.2023 14:47</small>
-                    </div>
-                    <div class="text-right">
-                        <button @click="tab = 7">ОТКРЫТЬ ЧАТ</button>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div class="account__info" v-if="tab == 4">
@@ -122,25 +95,29 @@
                 <div class="right__side">
                     <label for="description">Описание профиля</label>
                     <div class="desc">
-                        <textarea name="description" id="description" cols="30" rows="9" ref="desc" disabled></textarea>
+                        <textarea name="description" id="description" v-model="description" cols="30" rows="9" ref="desc"
+                            disabled></textarea>
                         <img src="@/assets/img/pen.svg" style="cursor: pointer;" @click="unlockEdit($refs.desc)" alt="">
                     </div>
                 </div>
             </div>
 
             <div class="btns">
-                <button>СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
-                <button>ВЫЙТИ ИЗ АККАУНТА</button>
+                <button @click="editLk()" ref="editBtn">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+                <button @click="logOut()">ВЫЙТИ ИЗ АККАУНТА</button>
             </div>
         </div>
         <TheCreate v-if="tab == 5"></TheCreate>
-        <TheEdit v-if="tab == 6"></TheEdit>
-        <TheMessanger v-if="tab == 7"></TheMessanger>
+        <TheEdit v-if="tab == 6" :productId="sendId"></TheEdit>
+        <TheMessanger v-if="tab == 7" :chatId="chatId" :name="chatName"></TheMessanger>
         <TheTrans v-if="tab == 2"></TheTrans>
     </div>
 </template>
 <script>
+import global from '~/mixins/global';
+import axios from 'axios';
 export default {
+    mixins: [global],
     data() {
         return {
             tab: 4,
@@ -148,42 +125,121 @@ export default {
             email: '',
             description: '',
             password: '',
-            products: [
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-            ]
+            first_name: '',
+            sales: [],
+            products: [],
+            transactions: [],
+            pathUrl: 'https://d-market.kz',
+            account: [],
+            sendId: null,
+            chatId: null,
+            myId: null,
         }
     },
     methods: {
         unlockEdit(ref) {
             ref.disabled = false
             ref.focus()
+        },
+        formatDate(dateString) {
+            const date = new Date(dateString);
+            const formattedDate = `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`;
+            return formattedDate;
+        },
+        openEditTab(productId) {
+            this.tab = 6;
+            this.sendId = productId;
+        },
+        getAccount() {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/seller/seller-lk`;
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios
+                .get(path)
+                .then(response => {
+                    this.account = response.data
+                    this.description = response.data.description
+                    this.name = response.data.user.first_name
+                    this.sales = response.data.my_sales
+                    this.products = response.data.products
+                    this.transactions = response.data.transactions
+                    this.myId = response.data.id
+
+                })
+                .catch(error => console.log(error));
+        },
+        editLk() {
+            const path = `${this.pathUrl}/api/seller/seller-lk/edit/`
+            this.$refs.editBtn.innerHTML = 'Сохраняем'
+            axios
+                .put(path,
+                    {
+                        user: {
+                            first_name: this.name,
+                            email: this.email,
+                        },
+                        description: this.description,
+                    }
+                )
+                .then((res) => {
+                    console.log(res)
+                    if (res.status == 200) {
+                        this.name = res.data.user.first_name
+                        this.description = res.data.description
+                        this.email = res.data.user.email
+
+                        this.$refs.editBtn.innerHTML = 'Успешно сохранено'
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.$refs.editBtn.innerHTML = 'Ошибка'
+                });
+        },
+        getChats() {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/messanger/all-chats`
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+
+            axios
+                .get(path)
+                .then(response => {
+                    this.chats = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        openChat(chatId, chatName) {
+            this.tab = 7;
+            this.chatId = chatId;
+            this.chatName = chatName
+        },
+        createChat(id, name) {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/messanger/new-chat`
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios
+                .post(path, {
+                    buyer: id,
+                    seller: this.myId,
+                })
+                .then(response => {
+                    const chatId = response.data.chat_id
+                    this.openChat(chatId, name)
+                })
+                .catch(error => console.log(error))
+        },
+    },
+    mounted() {
+        const accType = localStorage.getItem('accountType')
+        console.log(accType)
+        if (accType == 'seller-account') {
+            this.getAccount()
+            this.getChats()
+        }
+        else {
+            window.location.href = '/login'
         }
     }
 }
@@ -197,6 +253,20 @@ useSeoMeta({
 })
 </script>
 <style lang="scss" scoped>
+.chat__empty {
+    margin-top: 100px;
+
+    h1 {
+        font-size: 24px !important;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%;
+        color: #fff;
+        font-family: var(--cera);
+        text-align: center;
+    }
+}
+
 .account__info {
     margin-top: 36px;
 

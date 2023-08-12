@@ -88,45 +88,49 @@
                 <swiper-slide>
                     <div class="slide">
                         <div class="name d-flex justify-content-between align-items-center">
-                            <span>Юсупов Марат</span>
-                            <small>11.12.2021</small>
+                            <span>Айгуль Жумаисова</span>
+                            <small>12.08.2023</small>
                         </div>
 
-                        <p>D-Market - отличная биржа доменов с удобным интерфейсом и разнообразным выбором. Регистрация и
-                            перенос доменов проходят быстро и безопасно, а поддержка всегда поможет. Рекомендую!</p>
+                        <p>Отличное внимание к деталям и отзывчивая поддержка - это то, что делает D-Market стоящей
+                            платформой для тех, кто ищет удобный способ управления доменами.</p>
                     </div>
                 </swiper-slide>
                 <swiper-slide>
                     <div class="slide">
                         <div class="name d-flex justify-content-between align-items-center">
-                            <span>Юсупов Марат</span>
-                            <small>11.12.2021</small>
+                            <span>Анна Соколова</span>
+                            <small>1.08.2023</small>
                         </div>
 
-                        <p>D-Market - отличная биржа доменов с удобным интерфейсом и разнообразным выбором. Регистрация и
-                            перенос доменов проходят быстро и безопасно, а поддержка всегда поможет. Рекомендую!</p>
+                        <p>Биржа доменов D-Market оказалась настоящим открытием для меня. Легкий в использовании интерфейс,
+                            широкий выбор доменов и оперативная поддержка клиентов сделали процесс покупки домена
+                            удивительно простым. Рекомендую D-Market всем, кто ищет надежное и эффективное место для
+                            торговли доменами.</p>
                     </div>
                 </swiper-slide>
                 <swiper-slide>
                     <div class="slide">
                         <div class="name d-flex justify-content-between align-items-center">
-                            <span>Юсупов Марат</span>
-                            <small>11.12.2021</small>
+                            <span>Айгуль Жумаисова</span>
+                            <small>12.08.2023</small>
                         </div>
 
-                        <p>D-Market - отличная биржа доменов с удобным интерфейсом и разнообразным выбором. Регистрация и
-                            перенос доменов проходят быстро и безопасно, а поддержка всегда поможет. Рекомендую!</p>
+                        <p>Отличное внимание к деталям и отзывчивая поддержка - это то, что делает D-Market стоящей
+                            платформой для тех, кто ищет удобный способ управления доменами.</p>
                     </div>
                 </swiper-slide>
                 <swiper-slide>
                     <div class="slide">
                         <div class="name d-flex justify-content-between align-items-center">
-                            <span>Юсупов Марат</span>
-                            <small>11.12.2021</small>
+                            <span>Анна Соколова</span>
+                            <small>1.08.2023</small>
                         </div>
 
-                        <p>D-Market - отличная биржа доменов с удобным интерфейсом и разнообразным выбором. Регистрация и
-                            перенос доменов проходят быстро и безопасно, а поддержка всегда поможет. Рекомендую!</p>
+                        <p>Биржа доменов D-Market оказалась настоящим открытием для меня. Легкий в использовании интерфейс,
+                            широкий выбор доменов и оперативная поддержка клиентов сделали процесс покупки домена
+                            удивительно простым. Рекомендую D-Market всем, кто ищет надежное и эффективное место для
+                            торговли доменами.</p>
                     </div>
                 </swiper-slide>
 
@@ -144,119 +148,77 @@
                     <div class="faq__item">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample0"
                             aria-expanded="false" aria-controls="collapseExample0" id="faqbtn0">
-                            <span>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </span>
+                            <span>Что такое домен и почему он важен? </span>
                             <img src="@/assets/img/faqarrow.svg" alt="" id="arrow0">
                         </button>
                         <div class="collapse" id="collapseExample0">
                             <div class="card card-body">
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum
+                                <p>Домен - это уникальный веб-адрес, который позволяет пользователям находить ваш сайт в
+                                    Интернете. Он служит визитной карточкой вашей онлайн-идентичности и помогает создать
+                                    узнаваемый и профессиональный облик.
                                 </p>
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
-                                    Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</p>
+
                             </div>
                         </div>
                     </div>
                     <div class="faq__item">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1"
                             aria-expanded="false" aria-controls="collapseExample1" id="faqbtn1">
-                            <span>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </span>
+                            <span>Как я могу купить домен? </span>
                             <img src="@/assets/img/faqarrow.svg" alt="" id="arrow1">
                         </button>
                         <div class="collapse" id="collapseExample1">
                             <div class="card card-body">
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum
+                                <p>Чтобы приобрести домен, зарегистрируйтесь на Domain Market в качестве покупателя. В
+                                    каталоге найдите интересующий вас вариант домена, нажмите на него, чтобы увидеть
+                                    дополнительную информацию, а затем следуйте инструкциям по покупке.
                                 </p>
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
-                                    Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</p>
+
                             </div>
                         </div>
                     </div>
                     <div class="faq__item">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2"
                             aria-expanded="false" aria-controls="collapseExample2" id="faqbtn2">
-                            <span>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </span>
+                            <span>Почему стоимость доменов так сильно отличается? </span>
                             <img src="@/assets/img/faqarrow.svg" alt="" id="arrow2">
                         </button>
                         <div class="collapse" id="collapseExample2">
                             <div class="card card-body">
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum
+                                <p>Стоимость домена зависит от многих факторов, включая его длину, ключевые слова,
+                                    уникальность, рыночную конкуренцию и потенциал использования.
                                 </p>
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
-                                    Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</p>
+
                             </div>
                         </div>
                     </div>
                     <div class="faq__item">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample3"
                             aria-expanded="false" aria-controls="collapseExample3" id="faqbtn3">
-                            <span>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </span>
+                            <span>Какая защита предоставляется при покупке домена? </span>
                             <img src="@/assets/img/faqarrow.svg" alt="" id="arrow3">
                         </button>
                         <div class="collapse" id="collapseExample3">
                             <div class="card card-body">
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum
+                                <p>Мы обеспечиваем безопасную сделку через нашу биржу. Все домены проверяются на наличие
+                                    задолженностей и юридических ограничений перед их продажей.
                                 </p>
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
-                                    Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</p>
+
                             </div>
                         </div>
                     </div>
                     <div class="faq__item">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample4"
                             aria-expanded="false" aria-controls="collapseExample4" id="faqbtn4">
-                            <span>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </span>
+                            <span>Как я могу связаться с продавцом/покупателем домена? </span>
                             <img src="@/assets/img/faqarrow.svg" alt="" id="arrow4">
                         </button>
                         <div class="collapse" id="collapseExample4">
                             <div class="card card-body">
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum
+                                <p>После совершения покупки в Вашем Личном кабинете будет доступен чат с
+                                    продавцом/покупателем.
                                 </p>
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
-                                    Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="faq__item">
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample5"
-                            aria-expanded="false" aria-controls="collapseExample5" id="faqbtn5">
-                            <span>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </span>
-                            <img src="@/assets/img/faqarrow.svg" alt="" id="arrow5">
-                        </button>
-                        <div class="collapse" id="collapseExample5">
-                            <div class="card card-body">
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum
-                                </p>
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
-                                    Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="faq__item">
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample6"
-                            aria-expanded="false" aria-controls="collapseExample6" id="faqbtn6">
-                            <span>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </span>
-                            <img src="@/assets/img/faqarrow.svg" alt="" id="arrow6">
-                        </button>
-                        <div class="collapse" id="collapseExample6">
-                            <div class="card card-body">
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-                                    Ipsum Lorem Ipsum Lorem Ipsum
-                                </p>
-                                <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
-                                    Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</p>
+
                             </div>
                         </div>
                     </div>
@@ -337,7 +299,7 @@ export default {
         }
     },
     mounted() {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 5; i++) {
             $(`#collapseExample${i}`).on("show.bs.collapse", function () {
                 document.querySelector(`#arrow${i}`).classList.add = 'active'
             });
@@ -492,6 +454,7 @@ useSeoMeta({
         background: #FFF;
         padding: 40px;
         width: 100%;
+        height: 311px;
     }
 
     .name {
@@ -663,9 +626,14 @@ useSeoMeta({
                 color: #fff;
             }
 
-            &:hover {
-                border-image: linear-gradient(to right, transparent, #fff) 1;
-                border-image-slice: 1;
+            img {
+                transition: all .3s ease;
+            }
+
+
+
+            &:hover img {
+                transform: scale(1.3);
             }
         }
     }
@@ -844,7 +812,7 @@ useSeoMeta({
             color: #fff;
             font-family: var(--cera);
 
-            padding: 10px 60px;
+            padding: 10px 60px 14px;
             max-height: 44px;
 
             border-radius: 10px;

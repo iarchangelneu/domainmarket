@@ -14,8 +14,9 @@
         </div>
 
         <div>
-            <div class="catalog__body">
-                <div class="catalog__item" v-for="(product, i) in products" :key="product.i">
+            <div v-if="products.length <= 0"></div>
+            <div class="catalog__body" v-else>
+                <div class="catalog__item" v-for="(product, i) in products.results" :key="product.id">
                     <div class="name">
                         <div>
                             <small>{{ i + 1 }}.</small>
@@ -25,7 +26,7 @@
                     </div>
                     <div class="links">
                         <button>В КОРЗИНУ</button>
-                        <NuxtLink to="/product">СТРАНИЦА ТОВАРА</NuxtLink>
+                        <NuxtLink :to="'/product/' + product.id">СТРАНИЦА ТОВАРА</NuxtLink>
                     </div>
                 </div>
             </div>
@@ -37,40 +38,36 @@
     </div>
 </template>
 <script>
+import global from '~/mixins/global';
+import axios from 'axios';
 export default {
+    mixins: [global],
     data() {
         return {
             products: [
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-                {
-                    name: 'topdomain.su',
-                    price: 11540
-                },
-            ]
+
+            ],
+            pathUrl: 'https://d-market.kz',
         }
+    },
+    methods: {
+        getProducts() {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/products/all-product`
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios
+                .get(path)
+                .then(response => {
+                    this.products = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+        },
+    },
+    mounted() {
+        this.getProducts()
     }
 }
 </script >

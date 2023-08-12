@@ -1,32 +1,17 @@
 <template>
     <div class="product">
-        <div class="product__body">
+        <div class="empty" v-if="product.length <= 0"></div>
+        <div class="product__body" v-else>
             <div class="product__side">
                 <div class="name">
-                    <h1>EkoTourKazakhstan.com</h1>
-                    <span>11 540 ₸</span>
+                    <h1>{{ product.name }}</h1>
+                    <span>{{ product.price.toLocaleString() }} ₸</span>
                 </div>
 
                 <div class="product__description">
                     <h2>Описание:</h2>
 
-                    <p>Продается привлекательный и многогранный домен EkoTourKazakhstan.com, идеальный выбор для разработки
-                        веб-сайта, посвященного экологическому туризму и природным красотам Казахстана. Этот доменный адрес
-                        идеально подойдет для турфирм, гидов, отелей, а также организаций и органов, связанных с развитием
-                        экологического и устойчивого туризма.</p>
-
-                    <p>Продается привлекательный и многогранный домен EkoTourKazakhstan.com, идеальный выбор для разработки
-                        веб-сайта, посвященного экологическому туризму и природным красотам Казахстана. Этот доменный адрес
-                        идеально подойдет для турфирм, гидов, отелей, а также организаций и органов, связанных с развитием
-                        экологического и устойчивого туризма.</p>
-                    <p>Продается привлекательный и многогранный домен EkoTourKazakhstan.com, идеальный выбор для разработки
-                        веб-сайта, посвященного экологическому туризму и природным красотам Казахстана. Этот доменный адрес
-                        идеально подойдет для турфирм, гидов, отелей, а также организаций и органов, связанных с развитием
-                        экологического и устойчивого туризма.</p>
-                    <p>Продается привлекательный и многогранный домен EkoTourKazakhstan.com, идеальный выбор для разработки
-                        веб-сайта, посвященного экологическому туризму и природным красотам Казахстана. Этот доменный адрес
-                        идеально подойдет для турфирм, гидов, отелей, а также организаций и органов, связанных с развитием
-                        экологического и устойчивого туризма.</p>
+                    <p v-html="addLineBreaks(product.description)"></p>
 
                 </div>
 
@@ -34,22 +19,85 @@
             <div class="seller__side">
                 <div class="seller__info">
                     <small>Автор:</small>
-                    <span>Александр Иванов</span>
+                    <span>{{ seller.first_name }}</span>
                 </div>
                 <div class="seller__info">
                     <small>Категория:</small>
-                    <span>Путешествия</span>
+                    <span>{{ product.category.category_name }}</span>
                 </div>
                 <div class="seller__info">
                     <small>Регистратор домена:</small>
-                    <span>ps.kz</span>
+                    <span>{{ product.registrar }}</span>
                 </div>
+                <small ref="apiMessage" class="mb-2">{{ this.apiMessage }}</small>
+                <button @click="addToCart(product.id)" ref="cartBtn">В КОРЗИНУ</button>
 
-                <button>В КОРЗИНУ</button>
+
             </div>
         </div>
     </div>
 </template>
+<script>
+import global from '~/mixins/global';
+import axios from 'axios';
+export default {
+    mixins: [global],
+    data() {
+        return {
+            productId: this.$route.params.id,
+            product: [],
+            seller: [],
+            pathUrl: 'https://d-market.kz',
+            category: '',
+            apiMessage: '',
+        }
+    },
+    methods: {
+        addToCart(id) {
+            const path = `${this.pathUrl}/api/buyer/add-product-basket`
+            axios
+                .post(path, {
+                    products: id,
+                    amount: 1,
+                })
+                .then(response => {
+                    if (response.status == 201) {
+                        this.apiMessage = 'Товар успешно добавлен в корзину!'
+                        this.$refs.apiMessage.classList.add('green')
+                        this.$refs.cartBtn.disabled = true
+                        this.$refs.cartBtn.classList.add('disabled')
+                        this.getCart()
+                    }
+                    else {
+                        this.apiMessage = 'Произошла ошибка, попробуйте еще раз'
+                        this.$refs.apiMessage.classList.add('red')
+                        this.$refs.cartBtn.disabled = false
+
+                    }
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+        },
+        getProduct() {
+            const path = `${this.pathUrl}/api/products/detail-product/${this.productId}`
+            axios
+                .get(path)
+                .then(response => {
+                    this.product = response.data
+                    this.seller = response.data.seller.user
+                    this.category = response.data.category.category_name
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+        },
+    },
+    mounted() {
+        this.getProduct()
+    }
+}
+</script >
 <script setup>
 useSeoMeta({
     title: 'Товар | Domain Market',
@@ -59,6 +107,29 @@ useSeoMeta({
 })
 </script>
 <style lang="scss" scoped>
+.green {
+    color: green !important;
+    font-family: var(--cera);
+    font-size: 14px;
+    display: block;
+}
+
+.red {
+    color: red !important;
+    font-family: var(--cera);
+    font-size: 14px;
+    display: block;
+}
+
+.disabled {
+    background: grey !important;
+    color: #fff !important;
+}
+
+.empty {
+    height: 100vh;
+}
+
 .product {
     padding: 120px 150px;
 

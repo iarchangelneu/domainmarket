@@ -1,52 +1,68 @@
 <template>
     <div class="messenger">
-        <div class="left__side">
-            <div class="chat__item">
+        <div class="left__side" v-if="!isSeller">
+            <div class="chat__item" v-for="chat in chats" :key="chat.id"
+                @click="newChat(chat.id, chat.seller.user.first_name)">
                 <div class="name">
-                    <span>alex.ivanov@gmail.com</span>
-                    <small>14:47</small>
+                    <span>{{ chat.seller.user.first_name }}</span>
+                    <small>{{ getLastMessageTime(chat) }}</small>
                 </div>
 
-                <p class="mb-0">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </p>
+                <p class="mb-0">{{ getLastMessageText(chat) }} </p>
+            </div>
+        </div>
+        <div class="left__side" v-if="isSeller">
+            <div class="chat__item" v-for="chat in chats" :key="chat.id" @click="newChat(chat.id, chat.buyer.user.email)">
+                <div class="name">
+                    <span>{{ chat.buyer.user.first_name }}</span>
+                    <small>{{ getLastMessageTime(chat) }}</small>
+                </div>
+
+                <p class="mb-0">{{ getLastMessageText(chat) }} </p>
             </div>
         </div>
 
         <div class="right__side">
             <div class="messages">
-                <h1>alex.ivanov@gmail.com</h1>
+                <h1>{{ newName }}</h1>
 
                 <div class="chat__block">
 
-                    <div class="message__form" ref="messageContainer">
-                        <div class="message__to">
+                    <div class="message__form" ref="messageContainer" v-if="!isSeller">
+                        <div v-for="message in messages" :key="message.time"
+                            :class="{ message__to: !message.from_seller, message__from: message.from_seller }">
                             <div class="message">
-                                <div class="message__item from">
+                                <div class="message__item" :class="{ to: !message.from_seller, from: message.from_seller }">
                                     <p class="mb-0">
-                                        re</p>
+                                        {{ message.text }}</p>
                                 </div>
-                                <div class="time">
-                                    <small>12:04</small>
+                                <div class="time"
+                                    :class="{ 'text-right': !message.from_seller, 'text-left': message.from_seller }">
+                                    <small>{{ formatTime(message.time) }}</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="message__from">
+                    </div>
+                    <div class="message__form" ref="messageContainer" v-if="isSeller">
+                        <div v-for="message in messages" :key="message.time"
+                            :class="{ message__to: message.from_seller, message__from: !message.from_seller }">
                             <div class="message">
-                                <div class="message__item from">
+                                <div class="message__item" :class="{ to: message.from_seller, from: !message.from_seller }">
                                     <p class="mb-0">
-                                        re
-                                    </p>
+                                        {{ message.text }}</p>
                                 </div>
-                                <div class="time">
-                                    <small>12:04</small>
+                                <div class="time"
+                                    :class="{ 'text-right': message.from_seller, 'text-left': !message.from_seller }">
+                                    <small>{{ formatTime(message.time) }}</small>
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="sens__msg">
-                        <input type="text" placeholder="Введите сообщение..." v-model="newMessage">
-                        <img src="@/assets/img/send.svg" alt="" style="cursor: pointer;">
+                        <input type="text" v-model="textMessage" placeholder="Введите сообщение..."
+                            @keydown.enter.prevent="sendMsg">
+                        <img src="@/assets/img/send.svg" alt="" @click="sendMsg" style="cursor: pointer;">
                     </div>
                 </div>
             </div>
@@ -54,12 +70,166 @@
     </div>
 </template>
 <script>
+import global from '~/mixins/global';
+import axios from 'axios';
 export default {
+    mixins: [global],
+    props: {
+        chatId: Number,
+        name: String,
+    },
     data() {
         return {
-            newMessage: '',
+            message: 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Ipsum Ipsum Ipsum Ipsum',
+            textMessage: '',
+            textMessage2: '',
+            newName: this.name,
+            newId: this.chatId,
+            messages: [],
+            isTest: false,
+            pathUrl: 'https://d-market.kz',
+            msg: [],
+            socket: null,
+            isSeller: false,
+            chats: [],
         }
-    }
+    },
+    computed: {
+        lastMessage() {
+            return this.chat.messages.length > 0 ? this.chat.messages[this.chat.messages.length - 1] : null;
+        },
+    },
+    methods: {
+        getLastMessageTime(chat) {
+            const lastMessage = chat.messages && chat.messages.length > 0
+                ? chat.messages[chat.messages.length - 1]
+                : null;
+
+            return lastMessage && lastMessage.date_time
+                ? this.time(lastMessage.date_time)
+                : '';
+        },
+        getLastMessageText(chat) {
+            const lastMessage = chat.messages && chat.messages.length > 0
+                ? chat.messages[chat.messages.length - 1]
+                : null;
+
+            return lastMessage && lastMessage.text ? lastMessage.text : '';
+        },
+        formatTime(timeString) {
+            const timeArray = timeString.split(':');
+            const hours = timeArray[0];
+            const minutes = timeArray[1];
+            const formattedHours = hours.padStart(2, '0');
+            const formattedMinutes = minutes.padStart(2, '0');
+            return `${formattedHours}:${formattedMinutes}`;
+        },
+        time(dateTime) {
+            const date = new Date(dateTime);
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        },
+        getChats() {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/messanger/all-chats`
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+
+            axios
+                .get(path)
+                .then(response => {
+                    this.chats = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        scrollToBottom() {
+            const container = this.$refs.messageContainer;
+            container.scrollTop = container.scrollHeight;
+        },
+        sendMsg() {
+            if (this.textMessage.trim() === '') return;
+
+            const messageObject = {
+                text: this.textMessage,
+                from_seller: this.isSeller,
+            };
+
+            this.socket.send(JSON.stringify(messageObject));
+            this.textMessage = '';
+            this.$nextTick(() => {
+                this.scrollToBottom();
+            });
+
+        },
+        onSocketOpen(event) {
+            console.log('WebSocket connection opened:', event);
+
+        },
+        onSocketMessage(event) {
+            const msg = JSON.parse(event.data);
+            if (msg.type === 'chat.message' && msg.messages) {
+                // Обновляем массив messages, добавляя новые сообщения
+                this.messages.push(...msg.messages);
+                this.getChats()
+            } else {
+                // Обновляем массив messages, заменяя его содержимое на новое
+                this.messages = msg;
+                this.getChats()
+            }
+
+            this.$nextTick(() => {
+                this.scrollToBottom();
+            });
+        },
+        onSocketClose(event) {
+            console.log('WebSocket connection closed:', event);
+        },
+        onSocketError(event) {
+            console.error('WebSocket error:', event);
+        },
+        newChat(id, name) {
+            this.newId = id
+            this.newName = name
+            this.socket.close();
+
+            this.startChat()
+        },
+        startChat() {
+            this.socket = new WebSocket(`wss://d-market.kz/ws/messanger/open-chat/${this.newId}`);
+            this.socket.addEventListener('open', this.onSocketOpen);
+            this.socket.addEventListener('message', this.onSocketMessage);
+            this.socket.addEventListener('close', this.onSocketClose);
+            this.socket.addEventListener('error', this.onSocketError);
+
+        }
+    },
+    mounted() {
+        this.getChats()
+    },
+    created() {
+        this.startChat()
+
+
+        const accType = localStorage.getItem('accountType')
+        // console.log(accType)
+        if (accType == 'buyer-account') {
+            this.isSeller = false
+        }
+        else if (accType == 'seller-account') {
+            this.isSeller = true
+        }
+        else {
+            console.log('not authorized')
+        }
+
+    },
+    beforeDestroy() {
+        if (this.socket) {
+            this.socket.disconnect();
+        }
+    },
 }
 </script>
 <script setup>
