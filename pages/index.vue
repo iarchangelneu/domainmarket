@@ -416,7 +416,7 @@ useSeoMeta({
     .prev {
         position: absolute;
         left: 15%;
-        top: 30%;
+        top: 40%;
         z-index: 10;
         transition: all .3s ease;
     }
@@ -424,7 +424,7 @@ useSeoMeta({
     .next {
         position: absolute;
         right: 15%;
-        top: 30%;
+        top: 40%;
         z-index: 10;
         transition: all .3s ease;
     }
