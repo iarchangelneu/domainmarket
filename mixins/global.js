@@ -105,9 +105,11 @@ export default {
       const acctype = localStorage.getItem("accountType");
       if (acctype == "buyer-account") {
         this.accountUrl = "/buyer-account";
-      } else if (acctype == "seller-account") {
+      } 
+      else if (acctype == "seller-account") {
         this.accountUrl = "/seller-account";
-      } else {
+      } 
+      else {
         this.accountUrl = "/register";
       }
     }, 100);

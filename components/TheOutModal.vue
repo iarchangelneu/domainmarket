@@ -3,10 +3,17 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modalbody">
-                    <div class="text-center">
+                    <div class="text-center opa">
+                        <div></div>
                         <h1>Вывод средств</h1>
+                        <img src="@/assets/img/closemodal.svg" alt="" style="cursor: pointer;" data-dismiss="modal"
+                            aria-label="Close">
                     </div>
-
+                    <div class="tabers" v-if="accountType == 'buyer'">
+                        <button data-toggle="modal" data-dismiss="modal" aria-label="Close"
+                            data-target="#inModal">ПОПОЛНЕНИЕ</button>
+                        <button>ВЫВОД</button>
+                    </div>
                     <p>Порядок действий для вывода средств</p>
                     <p>1. Подтвердите Ваше согласие с правилами нашей системы</p>
 
@@ -28,7 +35,7 @@
 
                     <div class="clap">
                         <input type="number" placeholder="100 ₸" v-model="count">
-                        <button>ВЫВЕСТИ</button>
+                        <button ref="outBtn" @click="outMoney()">ВЫВЕСТИ</button>
                     </div>
 
                     <div class="tabs">
@@ -44,15 +51,48 @@
     </div>
 </template>
 <script>
+import global from '~/mixins/global';
+import axios from 'axios'
 export default {
+    mixins: [global],
     data() {
         return {
             cardNumber: '',
             cardNumberMaxLength: 19,
             count: null,
+            pathUrl: 'https://d-market.kz',
+            accountType: '',
         }
     },
     methods: {
+        outMoney() {
+            const token = this.getAuthorizationCookie()
+            const csrf = this.getCSRFToken()
+            const path = `${this.pathUrl}/api/money/pay-return`
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios.defaults.headers.common['X-CSRFToken'] = csrf;
+            this.$refs.outBtn.innerHTML = 'ОЖИДАЙТЕ'
+
+            axios
+                .post(path, {
+                    amount: this.count,
+                    card_number: this.cardNumber.replace(/\s/g, '')
+                })
+                .then(response => {
+                    console.log(response)
+                    if (response.status == 201) {
+                        this.$refs.outBtn.innerHTML = 'УСПЕШНО'
+                    }
+                    if (response.status == 228) {
+                        this.$refs.outBtn.innerHTML = response.data.error_msg
+                    }
+
+                })
+                .catch(error => {
+                    console.error(error)
+                    this.$refs.outBtn.innerHTML = 'ВЫВЕСТИ'
+                })
+        },
         formatCardNumber() {
             // Удаляем все символы, кроме цифр
             this.cardNumber = this.cardNumber.replace(/\D/g, '');
@@ -62,6 +102,19 @@ export default {
 
             // Обрезаем карточный номер до максимальной длины
             this.cardNumber = this.cardNumber.slice(0, this.cardNumberMaxLength);
+        }
+    },
+    mounted() {
+        const accType = localStorage.getItem('accountType')
+        if (accType == 'buyer-account') {
+            this.accountType = 'buyer'
+
+        }
+        else if (accType == 'seller-account') {
+            this.accountType = 'seller'
+        }
+        else {
+            return
         }
     }
 }
@@ -75,6 +128,51 @@ useSeoMeta({
 })
 </script>
 <style scoped>
+.tabers {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+}
+
+.tabers button {
+    flex: 1;
+    background: transparent;
+    border: 3px solid #fff;
+    border-radius: 10px;
+    padding: 12px 0;
+    text-align: center;
+
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%;
+    font-family: var(--cera);
+}
+
+.tabers button:nth-child(1) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+
+    color: #fff;
+    background: transparent;
+}
+
+.tabers button:nth-child(2) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
+    color: #000;
+    background: #fff;
+}
+
+.opa {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
 .tabs {
     margin-top: 10px;
     display: flex;
@@ -234,5 +332,23 @@ input {
 .modal-dialog {
     max-width: 611px;
     margin: 1.75rem auto;
+}
+
+@media (max-width: 1024px) {
+    .modalbody {
+        padding: 30px 20px;
+    }
+
+    .modalbody h1 {
+        font-size: 24px;
+    }
+
+    .modalbody p {
+        font-size: 16px;
+    }
+
+    .tabs {
+        justify-content: center;
+    }
 }
 </style>

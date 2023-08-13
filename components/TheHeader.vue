@@ -1,9 +1,9 @@
 <template>
-    <header v-if="!hideHeaderOnPages.includes($route.name)">
+    <header v-if="!hideHeaderOnPages.includes($route.name)" :style="headerStyle">
         <div class="pc">
             <div class="left">
                 <NuxtLink to="/catalog">Каталог</NuxtLink>
-                <NuxtLink to="/">Продавцу</NuxtLink>
+                <NuxtLink to="/for-seller">Продавцу</NuxtLink>
             </div>
             <NuxtLink to="/">
                 <img src="@/assets/img/headerlogo.svg" alt="">
@@ -40,7 +40,7 @@
                 </div>
                 <div v-if="isAuth">
                     <NuxtLink data-toggle="modal" data-target="#inModal">{{ userBalance }} ₸</NuxtLink>
-                    <NuxtLink to="/seller-account">Личный кабинет</NuxtLink>
+                    <NuxtLink :to="accountUrl">Личный кабинет</NuxtLink>
                 </div>
                 <div v-else>
                     <NuxtLink to="/login">Вход</NuxtLink>
@@ -81,7 +81,7 @@
                                     <NuxtLink style="cursor: pointer;" alt="" data-toggle="modal"
                                         :data-target="accountType === 'seller' ? '#outModal' : '#inModal'">{{
                                             userBalance }} ₸</NuxtLink>
-                                    <NuxtLink :to="this.accountUrl">Личный кабинет</NuxtLink>
+                                    <NuxtLink :to="accountUrl">Личный кабинет</NuxtLink>
                                 </div>
 
                                 <div class="text-center">
@@ -138,10 +138,27 @@ export default {
             pathUrl: 'https://d-market.kz',
             userBalance: null,
             accountType: '',
-            cartLength: localStorage.getItem('cartLength')
+            cartLength: localStorage.getItem('cartLength'),
+            scrollPosition: 0,
         }
     },
+    computed: {
+        headerStyle() {
+            if (this.scrollPosition > 100) { // Измените этот порог по своему усмотрению
+                return {
+                    background: 'linear-gradient(285deg, #070707 0%, #262626 100%)',
+                };
+            } else {
+                return {
+                    background: 'transparent',
+                };
+            }
+        },
+    },
     methods: {
+        handleScroll() {
+            this.scrollPosition = window.scrollY;
+        },
         openCart() {
             this.getCart()
             this.cartOpen = !this.cartOpen
@@ -197,7 +214,12 @@ export default {
                 })
         },
     },
+    beforeDestroy() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
     mounted() {
+
+        window.addEventListener('scroll', this.handleScroll);
         const accType = localStorage.getItem('accountType')
         if (accType == 'buyer-account') {
             this.getBuyer()
@@ -241,6 +263,12 @@ export default {
             color: #fff;
             background: #000;
         }
+
+        @media (max-width: 1024px) {
+            font-size: 16px;
+            padding: 10px 0;
+            width: 100%;
+        }
     }
 }
 
@@ -278,10 +306,18 @@ export default {
     @media (max-width: 1024px) {
         width: 100%;
         left: 0 !important;
+        padding: 20px;
     }
 
     .tru {
         margin-top: 51px;
+
+        @media (max-width: 1024px) {
+            flex-direction: column;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            margin-top: 20px;
+        }
 
 
         span {
@@ -304,7 +340,13 @@ export default {
 
         div {
             display: flex;
-            gap: 36px;
+            gap: 0;
+            margin-top: 10px;
+
+            @media (max-width: 1024px) {
+                justify-content: space-between;
+                width: 100%;
+            }
         }
     }
 
@@ -329,7 +371,7 @@ header {
     position: fixed;
     width: 100%;
     padding: 30px 150px;
-    background: linear-gradient(285deg, #070707 0%, #262626 100%);
+    background: transparent;
     z-index: 20;
 
 

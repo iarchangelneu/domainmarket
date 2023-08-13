@@ -1,6 +1,6 @@
 <template>
     <div class="register">
-        <img src="@/assets/img/reg.svg" alt="">
+        <img src="@/assets/img/reg.svg" class="pcimg" alt="">
 
         <div class="register__body">
             <div class="register__item">
@@ -33,6 +33,10 @@
                     <span>Уже есть аккаунт? <NuxtLink to="/login">Вход</NuxtLink></span>
                 </div>
             </div>
+        </div>
+
+        <div class="text-center">
+            <img src="@/assets/img/reg.svg" class="mobimg img-fluid" alt="">
         </div>
     </div>
 </template>
@@ -102,6 +106,26 @@ useSeoMeta({
     padding: 150px;
     height: 100vh;
 
+    @media (max-width: 1024px) {
+        padding: 20px;
+    }
+
+    .mobimg {
+        display: none;
+    }
+
+    @media (max-width: 1024px) {
+        .pcimg {
+            display: none;
+        }
+
+        .mobimg {
+            display: block;
+            margin-top: 50px;
+            width: 100%;
+        }
+    }
+
     .register__body {
         display: flex;
         justify-content: center;
@@ -118,6 +142,11 @@ useSeoMeta({
                 color: #fff;
                 margin-bottom: 46px;
                 text-align: center;
+
+                @media (max-width: 1024px) {
+                    font-size: 32px;
+                    margin-bottom: 35px;
+                }
             }
 
             input {
@@ -135,6 +164,10 @@ useSeoMeta({
                 line-height: 110%;
                 color: #fff;
                 font-family: var(--cera);
+
+                @media (max-width: 1024px) {
+                    font-size: 16px;
+                }
 
                 &::placeholder {
                     color: rgba(255, 255, 255, 0.60);
@@ -232,7 +265,7 @@ useSeoMeta({
 
 .switch-button {
     width: 100%;
-    height: 60px;
+    height: 47.8px;
     text-align: center;
     position: relative;
     left: 50%;

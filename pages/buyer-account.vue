@@ -13,6 +13,19 @@
             </div>
         </div>
 
+        <div class="tabsmob">
+            <div class="mobtab">
+                <button :class="[{ active: tab == 0 }, { active: tab == 5 }, { active: tab == 6 }]" @click="tab = 0">МОИ
+                    ПОКУПКИ</button>
+                <button :class="{ active: tab == 2 }" @click="tab = 2">ТРАНЗАКЦИИ</button>
+            </div>
+            <div class="mobtab">
+                <button :class="[{ active: tab == 3 }, { active: tab == 7 }]" @click="tab = 3">ОБРАТНАЯ СВЯЗЬ</button>
+                <button :class="{ active: tab == 4 }" @click="tab = 4">АККАУНТ</button>
+            </div>
+
+        </div>
+
         <div class="sales products" v-if="tab == 0">
             <div class="products__empty" v-if="buys.length <= 0">
                 <h1>У ВАС ПОКА ЧТО НЕ БЫЛО ПОКУПОК</h1>
@@ -38,13 +51,13 @@
                 <h1>У ВАС ПОКА НЕ БЫЛО ЧАТОВ</h1>
             </div>
             <div class="chats__body" v-else>
-                <div class="chats__item">
+                <div class="chats__item" v-for="chat in chats" :key="chat.id">
                     <div class="name">
-                        <span>alex.ivanov@gmail.com</span>
-                        <small>23.07.2023 14:47</small>
+                        <span>{{ chat.seller.user.first_name }}</span>
+                        <!-- <small>23.07.2023 14:47</small> -->
                     </div>
                     <div class="text-right">
-                        <button @click="tab = 7">ОТКРЫТЬ ЧАТ</button>
+                        <button @click="openChat(chat.id, chat.seller.user.first_name)">ОТКРЫТЬ ЧАТ</button>
                     </div>
                 </div>
 
@@ -55,7 +68,7 @@
             <div class="info__block">
                 <div>
                     <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email" placeholder="Ваш E-mail">
+                    <input type="email" name="email" id="email" placeholder="Ваш E-mail" v-model="email">
                 </div>
                 <div>
                     <label for="password">Пароль</label>
@@ -69,7 +82,7 @@
 
         </div>
         <TheMessanger v-if="tab == 7" :chatId="chatId" :name="chatName"></TheMessanger>
-        <TheTrans v-if="tab == 2"></TheTrans>
+        <TheTrans v-if="tab == 2" :transactions="transactions"></TheTrans>
     </div>
 </template>
 <script>
@@ -86,6 +99,7 @@ export default {
             transactions: [],
             buys: [],
             chats: [],
+            email: '',
         }
     },
     methods: {
@@ -99,6 +113,7 @@ export default {
                     this.account = response.data
                     this.myId = response.data.id
                     this.transactions = response.data.transactions
+                    this.email = response.data.user.email
 
 
                 })
@@ -175,6 +190,7 @@ useSeoMeta({
 <style lang="scss" scoped>
 .chat__empty {
     margin-top: 100px;
+    margin-bottom: 100px;
 
     h1 {
         font-size: 24px !important;
@@ -190,6 +206,10 @@ useSeoMeta({
 .account__info {
     margin-top: 150px;
     width: 100%;
+
+    @media (max-width: 1024px) {
+        margin-top: 40px;
+    }
 
     button {
         margin-top: 36px;
@@ -218,6 +238,10 @@ useSeoMeta({
         justify-content: center;
         gap: 20px;
 
+        @media (max-width: 1024px) {
+            flex-direction: column;
+        }
+
         label {
             font-size: 18px;
             font-style: normal;
@@ -231,7 +255,7 @@ useSeoMeta({
         }
 
         input {
-            width: 560px;
+            width: 29.167vw;
             border-radius: 10px;
             border: 3px solid #FFF;
             font-family: var(--cera);
@@ -242,6 +266,10 @@ useSeoMeta({
             font-style: normal;
             font-weight: 400;
             line-height: 110%;
+
+            @media (max-width: 1024px) {
+                width: 100%;
+            }
 
         }
     }
@@ -262,10 +290,21 @@ useSeoMeta({
             border: 2px solid #FFF;
             padding: 36px;
 
+            @media (max-width: 1024px) {
+                padding: 20px;
+                width: 100%;
+            }
+
             .name {
                 display: flex;
                 gap: 0 42px;
                 align-items: center;
+
+                @media (max-width: 1024px) {
+                    flex-direction: column;
+                    gap: 10px 0;
+                    align-items: flex-start;
+                }
 
                 span {
                     font-size: 20px;
@@ -275,6 +314,10 @@ useSeoMeta({
                     text-transform: uppercase;
                     color: #fff;
                     font-family: var(--cera);
+
+                    @media (max-width: 1024px) {
+                        font-size: 20px;
+                    }
                 }
 
                 small {
@@ -284,6 +327,10 @@ useSeoMeta({
                     line-height: 130%;
                     color: #fff;
                     font-family: var(--cera);
+
+                    @media (max-width: 1024px) {
+                        font-size: 16px;
+                    }
                 }
             }
 
@@ -316,6 +363,7 @@ useSeoMeta({
 
     .products__empty {
         margin-top: 100px;
+        margin-bottom: 100px;
         display: flex;
         justify-content: center;
 
@@ -337,8 +385,16 @@ useSeoMeta({
         flex-wrap: wrap;
         gap: 36px 95px;
 
+        @media (max-width: 1440px) {
+            justify-content: center;
+        }
+
         .catalog__item {
             width: 476px;
+
+            @media (max-width: 1100px) {
+                width: 100%;
+            }
 
             .name {
                 display: flex;
@@ -348,6 +404,10 @@ useSeoMeta({
                 div {
                     display: flex;
                     gap: 24px;
+
+                    @media (max-width: 1024px) {
+                        gap: 10px;
+                    }
 
                     small {
                         font-size: 18px;
@@ -368,6 +428,10 @@ useSeoMeta({
                         text-transform: uppercase;
                         font-family: var(--cera);
                         color: #fff;
+
+                        @media (max-width: 1024px) {
+                            font-size: 16px;
+                        }
                     }
                 }
 
@@ -379,6 +443,11 @@ useSeoMeta({
                     text-transform: uppercase;
                     font-family: var(--cera);
                     color: #fff;
+
+                    @media (max-width: 1024px) {
+                        font-size: 16px;
+                        white-space: nowrap;
+                    }
                 }
             }
 
@@ -386,6 +455,10 @@ useSeoMeta({
                 display: flex;
                 gap: 20px;
                 margin-top: 28px;
+
+                @media (max-width: 1024px) {
+                    margin-top: 22px;
+                }
 
                 button,
                 a {
@@ -408,6 +481,11 @@ useSeoMeta({
                     &:hover {
                         color: #000;
                         background: #fff;
+                    }
+
+                    @media (max-width: 1024px) {
+                        font-size: 16px;
+                        padding: 10px 18px;
                     }
                 }
             }
@@ -451,6 +529,16 @@ useSeoMeta({
 
 .account {
     padding: 120px 150px 72px;
+    height: 100vh;
+
+    @media(max-width: 1500px) {
+        padding: 120px 50px 50px;
+    }
+
+    @media(max-width: 1024px) {
+        padding: 120px 20px 50px;
+    }
+
 
     h1 {
         font-size: 48px;
@@ -460,6 +548,47 @@ useSeoMeta({
         text-transform: uppercase;
         font-family: var(--cera);
         color: #fff;
+
+        @media (max-width: 1024px) {
+            font-size: 32px;
+        }
+    }
+
+    .tabsmob {
+        display: none;
+        margin-top: 20px;
+
+        @media (max-width: 1024px) {
+            display: block;
+        }
+
+        .mobtab {
+            display: flex;
+            margin-bottom: 10px;
+
+
+            button {
+                &:nth-child(1) {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+
+                &:nth-child(2) {
+                    border-left: 0;
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
+            }
+        }
+
+        button {
+            border-radius: 10px;
+            border: 2px solid #FFF;
+            background: transparent;
+            padding: 13px 17px;
+            color: #fff;
+            flex: 1;
+        }
     }
 
     .tabs {
@@ -467,8 +596,20 @@ useSeoMeta({
         justify-content: space-between;
         margin-top: 36px;
 
+        @media (max-width: 1024px) {
+            display: none;
+        }
+
         .t {
             width: 60%;
+
+            @media(max-width: 1500px) {
+                width: 30%;
+            }
+
+            @media (max-width: 1024px) {
+                display: none;
+            }
         }
 
         div {

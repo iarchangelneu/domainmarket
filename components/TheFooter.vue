@@ -3,16 +3,19 @@
         <div class="links">
             <img src="@/assets/img/footerlogo.svg" alt="">
             <div>
-                <NuxtLink to="/">личный кабинет</NuxtLink>
-                <NuxtLink to="/">пользовательское соглашение</NuxtLink>
-                <NuxtLink to="/">политика конфиденциальности</NuxtLink>
+                <NuxtLink :to="accountUrl">личный кабинет</NuxtLink>
+                <NuxtLink to="/terms">пользовательское соглашение</NuxtLink>
+                <NuxtLink to="/polytics">политика конфиденциальности</NuxtLink>
             </div>
         </div>
 
         <div class="copyright">
             <div class="text-center">
-                <p>г. Алматы, пр-кт Республики 13, Почтовый индекс A15X3C5 (050013), <a href="tel:+7 775 816 82 48">+7 775
-                        816 82 48</a>, БИН 210840016943
+                <p>ТОО "ABNK.KZ",
+                    БИН - 230440033532
+                    Республика Казахстан, город Астана,<br>
+                    район Алматы, улица Қалибек Қуанышбаев,
+                    дом, 15/2, кв. 111
                 </p>
                 <p>Почта поддержки : <a href="mailto:support@designmarket.kz">support@designmarket.kz</a></p>
             </div>
@@ -24,7 +27,20 @@ export default {
     data() {
         return {
             hideFooterOnPages: ['login', 'register'],
+            accountUrl: '',
         };
+    },
+    mounted() {
+        const accType = localStorage.getItem('accountType')
+        if (accType == 'buyer-account') {
+            this.accountUrl = '/buyer-account'
+        }
+        else if (accType == 'seller-account') {
+            this.accountUrl = '/seller-account'
+        }
+        else {
+            console.log('not authorized')
+        }
     }
 }
 </script>

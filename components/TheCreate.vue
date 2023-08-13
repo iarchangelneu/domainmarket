@@ -8,7 +8,7 @@
                         @input="extractDomainZone">
                 </div>
                 <div class="d-flex align-items-center category__select">
-                    <div>
+                    <div class="trap">
                         <label for="category">Выберите категорию *</label>
                         <select name="add_category" id="category" v-model="selectedCategory" :disabled="hasSelectedCategory"
                             required>
@@ -30,11 +30,11 @@
                 </div>
 
                 <div class="input__body te d-flex">
-                    <div>
+                    <div class="zasd">
                         <label for="price">Введите цену</label>
                         <input type="number" id="price" placeholder="Цена за товар" v-model="price">
                     </div>
-                    <div>
+                    <div class="zasd">
                         <label for="reg">Регистратор домена *</label>
                         <input type="text" id="reg" placeholder="Введите название регистратора" v-model="registrator">
                     </div>
@@ -170,6 +170,13 @@ useSeoMeta({
         margin-top: 36px;
         transition: all .3s ease;
 
+        @media (max-width: 1024px) {
+            padding: 12px 0;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
         &:hover {
             color: #000;
             background: #fff;
@@ -180,6 +187,10 @@ useSeoMeta({
         display: flex;
         gap: 40px;
 
+        @media (max-width: 1024px) {
+            flex-direction: column;
+            gap: 0;
+        }
 
 
         label {
@@ -192,6 +203,10 @@ useSeoMeta({
             font-family: var(--cera);
             margin-bottom: 10px;
             margin-left: 20px;
+
+            @media (max-width: 1024px) {
+                font-size: 16px;
+            }
         }
 
         .right__side {
@@ -218,17 +233,35 @@ useSeoMeta({
 
             .te {
 
+                @media (max-width: 1024px) {
+                    flex-direction: column;
+                    gap: 0;
+                }
+
                 width: 100%;
                 gap: 20px;
 
                 #price {
                     width: 14.167vw;
+
+                    @media (max-width: 1024px) {
+                        width: 100%;
+                    }
                 }
 
                 #reg {
                     width: 23.906vw;
+
+                    @media (max-width: 1024px) {
+                        width: 100%;
+                    }
                 }
 
+                .zasd {
+                    @media (max-width: 1024px) {
+                        flex: 1;
+                    }
+                }
             }
 
             input,
@@ -251,11 +284,19 @@ useSeoMeta({
 
             input {
                 width: 39.115vw;
+
+                @media (max-width: 1024px) {
+                    width: 100%;
+                }
             }
 
             select {
                 color: #fff;
                 width: 25.885vw;
+
+                @media (max-width: 1024px) {
+                    width: 100%;
+                }
             }
 
             option {
@@ -263,7 +304,19 @@ useSeoMeta({
             }
 
             .category__select {
+                .trap {
+                    @media (max-width: 1024px) {
+                        width: 100%;
+                    }
+                }
+
                 width: 100%;
+
+                @media (max-width: 1024px) {
+                    flex-direction: column;
+                    justify-content: flex-start !important;
+                    align-items: flex-start !important;
+                }
             }
 
             .selected__cat {
@@ -273,6 +326,12 @@ useSeoMeta({
                 margin-top: 9px;
                 margin-left: 20px;
                 width: 12.188vw;
+
+                @media (max-width:1024px) {
+                    width: auto;
+                    margin-bottom: 20px;
+                    margin-left: 0;
+                }
 
 
                 span {

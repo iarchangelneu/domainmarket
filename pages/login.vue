@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <img src="@/assets/img/reg.svg" alt="">
+        <img src="@/assets/img/reg.svg" class="pcimg" alt="">
 
         <div class="login__body">
             <div class="login__item">
@@ -16,6 +16,9 @@
                     <span>Ещё нет аккаунта? <NuxtLink to="/register">Регистрация</NuxtLink></span>
                 </div>
             </div>
+        </div>
+        <div class="text-center">
+            <img src="@/assets/img/reg.svg" class="mobimg img-fluid" alt="">
         </div>
     </div>
 </template>
@@ -74,12 +77,40 @@ useSeoMeta({
     padding: 150px;
     height: 100vh;
 
+    @media (max-width: 1024px) {
+        padding: 20px;
+    }
+
+    .mobimg {
+        display: none;
+    }
+
+    @media (max-width: 1024px) {
+        .pcimg {
+            display: none;
+        }
+
+        .mobimg {
+            display: block;
+            margin-top: 50px;
+            width: 100%;
+        }
+    }
+
     .login__body {
         display: flex;
         justify-content: center;
         margin-top: 70px;
 
+        @media (max-width: 1024px) {
+            width: 100%;
+        }
+
         .login__item {
+            @media (max-width: 1024px) {
+                width: 100%;
+            }
+
             h1 {
                 font-size: 48px;
                 font-style: normal;
@@ -90,6 +121,11 @@ useSeoMeta({
                 color: #fff;
                 margin-bottom: 46px;
                 text-align: center;
+
+                @media (max-width: 1024px) {
+                    font-size: 36px;
+                    margin-bottom: 35px;
+                }
             }
 
             input {
@@ -107,6 +143,12 @@ useSeoMeta({
                 line-height: 110%;
                 color: #fff;
                 font-family: var(--cera);
+
+                @media (max-width:1024px) {
+                    width: 100%;
+                    font-size: 16px;
+                    padding: 10px 15px;
+                }
 
                 &::placeholder {
                     color: rgba(255, 255, 255, 0.60);
@@ -128,6 +170,12 @@ useSeoMeta({
                 color: #fff;
                 font-family: var(--cera);
                 transition: all .3s ease;
+
+                @media (max-width:1024px) {
+                    width: 100%;
+                    font-size: 16px;
+                    padding: 10px 15px;
+                }
 
                 &:hover {
                     color: #000;

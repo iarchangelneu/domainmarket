@@ -7,6 +7,45 @@
         </div>
     </div>
 </template>
+<script>
+import global from '~/mixins/global';
+import axios from 'axios';
+export default {
+    mixins: [global],
+    data() {
+        return {
+            pathUrl: 'https://d-market.kz',
+        }
+    },
+    methods: {
+        sendRequest(reference) {
+            const token = this.getAuthorizationCookie();
+            const path = `${this.pathUrl}/api/money/failure/${reference}`;
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios
+                .get(path)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+    },
+    mounted() {
+        const url = window.location.href;
+        const match = url.match(/order_pay_(\d+)/);
+
+        if (match) {
+            this.extractedValue = match[0];
+            console.log(this.extractedValue);
+
+            this.sendRequest(match[0])
+        }
+    },
+
+}
+</script >
 <script setup>
 useSeoMeta({
     title: 'Неудача | Domain Market',
@@ -19,6 +58,14 @@ useSeoMeta({
 .failure {
     padding: 150px 150px 175px;
 
+    @media (max-width: 1440px) {
+        padding: 150px 50px 50px;
+    }
+
+    @media (max-width: 1024px) {
+        padding: 120px 20px 50px;
+    }
+
     h1 {
         margin-top: 150px;
         font-size: 24px;
@@ -28,6 +75,10 @@ useSeoMeta({
         font-family: var(--cera);
         color: #fff;
         margin-bottom: 91px;
+
+        @media (max-width: 1024px) {
+            font-size: 16px;
+        }
     }
 
     a {

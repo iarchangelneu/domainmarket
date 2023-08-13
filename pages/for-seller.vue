@@ -21,8 +21,9 @@
                 <p class="mt-4">Успешная продажа домена требует тщательной подготовки, профессионального общения и четкой
                     организации.
                     Следуй этой краткой инструкции и будь готов к активной коммуникации с потенциальными покупателями!</p>
-
-                <NuxtLink to="/register">ЗАРЕГИСТРИРОВАТЬСЯ</NuxtLink>
+                <div class="tre">
+                    <NuxtLink to="/register">ЗАРЕГИСТРИРОВАТЬСЯ</NuxtLink>
+                </div>
             </div>
         </div>
     </div>
@@ -39,9 +40,30 @@ useSeoMeta({
 .seller {
     padding: 120px 150px 41px;
 
+    @media (max-width: 1600px) {
+        padding: 120px 50px 41px;
+    }
+
+    @media (max-width: 1024px) {
+        padding: 120px 20px 40px;
+    }
+
     .seller__body {
         display: flex;
         gap: 44px;
+
+        @media (max-width: 1440px) {
+            img {
+                max-width: 30%;
+                height: auto;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            img {
+                display: none;
+            }
+        }
 
         div {
             h1 {
@@ -52,11 +74,20 @@ useSeoMeta({
                 font-family: var(--cera);
                 color: #fff;
                 margin-bottom: 36px;
+
+                @media (max-width: 1024px) {
+                    font-size: 24px;
+                }
             }
 
             p {
                 margin-bottom: 36px !important;
+
+                @media (max-width: 1024px) {
+                    margin-bottom: 15px !important;
+                }
             }
+
 
             p,
             ul,
@@ -69,6 +100,10 @@ useSeoMeta({
                 color: #fff;
                 font-family: var(--cera);
                 margin-bottom: 10px;
+
+                @media (max-width: 1024px) {
+                    font-size: 16px;
+                }
             }
 
             a {
@@ -88,9 +123,21 @@ useSeoMeta({
                 transition: all .3s ease;
                 margin-top: 36px;
 
+                @media (max-width: 1024px) {
+                    font-size: 20px;
+                    padding: 10px 23px;
+                    margin-top: 30px;
+                }
+
                 &:hover {
                     color: #000;
                     background: #fff;
+                }
+            }
+
+            .tre {
+                @media (max-width: 1024px) {
+                    text-align: center;
                 }
             }
         }

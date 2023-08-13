@@ -14,7 +14,7 @@
         <div class="left__side" v-if="isSeller">
             <div class="chat__item" v-for="chat in chats" :key="chat.id" @click="newChat(chat.id, chat.buyer.user.email)">
                 <div class="name">
-                    <span>{{ chat.buyer.user.first_name }}</span>
+                    <span>{{ chat.buyer.user.email }}</span>
                     <small>{{ getLastMessageTime(chat) }}</small>
                 </div>
 
@@ -248,6 +248,7 @@ useSeoMeta({
     display: flex;
     gap: 40px;
 
+
     .sens__msg {
         width: 100%;
         display: flex;
@@ -282,6 +283,10 @@ useSeoMeta({
             padding: 20px 40px;
             width: 100%;
 
+            @media (max-width: 1024px) {
+                padding: 20px;
+            }
+
             h1 {
                 font-size: 24px;
                 font-style: normal;
@@ -291,6 +296,10 @@ useSeoMeta({
                 font-family: var(--cera);
                 color: #fff;
                 margin-bottom: 0;
+
+                @media (max-width: 1024px) {
+                    font-size: 20px;
+                }
             }
 
             .chat__block {
@@ -345,6 +354,10 @@ useSeoMeta({
                     max-width: 543px;
                     margin-bottom: 5px;
 
+                    @media (max-width: 1024px) {
+                        padding: 15px 20px;
+                    }
+
                     p {
                         font-size: 18px;
                         font-style: normal;
@@ -353,6 +366,10 @@ useSeoMeta({
                         font-family: var(--cera);
                         color: #fff;
                         white-space: normal;
+
+                        @media (max-width: 1024px) {
+                            font-size: 16px;
+                        }
                     }
 
 
@@ -363,6 +380,11 @@ useSeoMeta({
     }
 
     .left__side {
+
+        @media (max-width: 1024px) {
+            display: none;
+        }
+
         .chat__item {
             cursor: pointer;
             border-radius: 10px;
