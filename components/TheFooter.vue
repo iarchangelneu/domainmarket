@@ -32,8 +32,7 @@ export default {
 footer {
     border-radius: 20px;
     background: transparent;
-    margin: 30px;
-    padding: 34px 120px;
+    padding: 34px 150px;
 
     @media (max-width: 1500px) {
         padding: 34px 50px;

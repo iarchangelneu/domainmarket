@@ -133,15 +133,36 @@ useSeoMeta({
 .product {
     padding: 120px 150px;
 
+    @media (max-width: 1500px) {
+        padding: 120px 50px;
+    }
+
+    @media (max-width: 1024px) {
+        padding: 120px 20px;
+    }
+
     .product__body {
         margin-top: 50px;
         display: flex;
         justify-content: space-between;
         gap: 60px;
 
+        @media (max-width: 1024px) {
+            flex-direction: column;
+            gap: 20px;
+        }
+
         .seller__side {
             width: 100%;
             max-width: 529px;
+
+            @media (max-width: 1500px) {
+                max-width: 350px;
+            }
+
+            @media (max-width: 1024px) {
+                max-width: 100%;
+            }
 
             .seller__info {
                 display: flex;
@@ -202,6 +223,12 @@ useSeoMeta({
                 justify-content: space-between;
                 align-items: center;
 
+                @media (max-width: 1024px) {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 10px;
+                }
+
                 h1 {
                     font-size: 24px;
                     font-style: normal;
@@ -211,6 +238,10 @@ useSeoMeta({
                     font-family: var(--cera);
                     color: #fff;
                     margin: 0;
+
+                    @media (max-width: 1024px) {
+                        font-size: 20px;
+                    }
                 }
 
                 span {
@@ -221,11 +252,19 @@ useSeoMeta({
                     text-transform: uppercase;
                     font-family: var(--cera);
                     color: #fff;
+
+                    @media (max-width: 1024px) {
+                        font-size: 24px;
+                    }
                 }
             }
 
             .product__description {
                 margin: 43px 0 0;
+
+                @media (max-width: 1024px) {
+                    margin: 20px 0 0;
+                }
 
                 h2 {
                     font-size: 18px;

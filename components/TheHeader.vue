@@ -418,7 +418,7 @@ header {
                     top: -30%;
                     color: #000;
                     border-radius: 50%;
-                    padding: 4px 4px;
+                    padding: 2px 5px;
 
                     font-size: 12px;
                     font-style: normal;

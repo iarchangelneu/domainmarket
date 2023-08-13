@@ -21,10 +21,11 @@
                                         alt=""></span>
                             </div>
                             <input type="text" class="form-control" placeholder="" aria-label="search"
-                                aria-describedby="basic-addon1">
+                                aria-describedby="basic-addon1" v-model="search">
                         </div>
-                        <button>НАЙТИ</button>
-                        <button class="searchbtn"><img src="@/assets/img/searchico.svg" alt=""></button>
+                        <NuxtLink :to="'/catalog?search=' + search">НАЙТИ</NuxtLink>
+                        <NuxtLink class="searchbtn" :to="'/catalog?search=' + search"><img src="@/assets/img/searchico.svg"
+                                alt=""></NuxtLink>
                     </div>
                 </div>
             </div>
@@ -273,6 +274,7 @@ export default {
                 prevEl: '.prev',
                 nextEl: '.next',
             },
+            search: '',
             products: [
                 {
                     name: 'topdomain.kz'
@@ -1148,7 +1150,7 @@ useSeoMeta({
             }
         }
 
-        button {
+        a {
             font-size: 18px;
             font-style: normal;
             font-weight: 500;
@@ -1164,13 +1166,14 @@ useSeoMeta({
             background: transparent;
             margin-left: 10px;
             transition: all .3s ease;
+            text-decoration: none;
 
             @media (max-width: 1024px) {
                 display: none;
             }
         }
 
-        button:hover {
+        a:hover {
             color: #000;
             background: #fff;
         }
