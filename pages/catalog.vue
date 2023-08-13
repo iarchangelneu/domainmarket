@@ -34,53 +34,6 @@
                 </div>
 
                 <div class="cats">
-                    <div class="domains">
-                        <h3>ДОМЕННЫЕ ЗОНЫ</h3>
-                        <div class="domains__block">
-                            <div class="domains__item">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="" value="0">
-                                    <p class="checkbox-text m-0">.kz</p>
-                                </label>
-                            </div>
-                            <div class="domains__item">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="" value="0">
-                                    <p class="checkbox-text m-0">.kz</p>
-                                </label>
-                            </div>
-                            <div class="domains__item">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="" value="0">
-                                    <p class="checkbox-text m-0">.kz</p>
-                                </label>
-                            </div>
-                            <div class="domains__item">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="" value="0">
-                                    <p class="checkbox-text m-0">.kz</p>
-                                </label>
-                            </div>
-                            <div class="domains__item">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="" value="0">
-                                    <p class="checkbox-text m-0">.kz</p>
-                                </label>
-                            </div>
-                            <div class="domains__item">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="" value="0">
-                                    <p class="checkbox-text m-0">.kz</p>
-                                </label>
-                            </div>
-                            <div class="domains__item">
-                                <label class="custom-checkbox">
-                                    <input type="checkbox" class="" value="0">
-                                    <p class="checkbox-text m-0">.kz</p>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
                     <div class="category">
                         <h3>КАТЕГОРИИ</h3>
                         <div class="category__block">
