@@ -20,9 +20,7 @@
                     <td>{{ formatDate(item.date) }}</td>
                     <td :class="{ success: item.paid == 1, failure: item.paid == 0 }">{{ item.paid == 1 ? 'Совершено' :
                         item.paid == 0 ? 'Отменено' : item.paid }}</td>
-                    <td>{{ item.paid === 0
-                        ? `${(item.amount_now - item.amount).toLocaleString()} ₸`
-                        : `${(item.amount_now + item.amount).toLocaleString()} ₸` }}</td>
+                    <td>{{ calculateAmountNow(item) }} ₸</td>
                 </tr>
             </tbody>
         </table>
@@ -46,9 +44,7 @@
                         </div>
                         <div>
                             <span>Состояние счета</span>
-                            <small>{{ item.paid === 0
-                                ? `${(item.amount_now - item.amount).toLocaleString()} ₸`
-                                : `${(item.amount_now + item.amount).toLocaleString()} ₸` }}</small>
+                            <small>{{ calculateAmountNow(item) }} ₸</small>
                         </div>
                     </div>
                 </div>
@@ -68,6 +64,17 @@ export default {
         }
     },
     methods: {
+        calculateAmountNow(item) {
+            if (item.type_operation === 'ВЫВОД' && item.paid === 0) {
+                return (item.amount_now + item.amount).toLocaleString();
+            }
+            else if (item.type_operation === 'ПОПОЛНЕНИЕ' && item.paid === 0) {
+                return (item.amount_now - item.amount).toLocaleString();
+            }
+            else {
+                return item.amount_now.toLocaleString();
+            }
+        },
         formatDate(dateTime) {
             // Создаем объект Date из строки времени
             const date = new Date(dateTime);
