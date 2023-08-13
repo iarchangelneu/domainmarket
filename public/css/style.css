@@ -165,6 +165,11 @@ body::-webkit-scrollbar {
     background: linear-gradient(to bottom, #D675DB, #0051A3) !important;
 }
 
+input[type="password"] {
+    font-family: inherit !important;
+    /* Замените "Arial" на желаемый шрифт */
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
