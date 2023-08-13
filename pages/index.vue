@@ -50,7 +50,8 @@
 
             <div class="catalog__body">
 
-                <NuxtLink to="/" class="catalog__item" v-for="product in products" :key="product.name">
+                <NuxtLink class="catalog__item" v-for="product in products" :key="product.name"
+                    :to="'/product/' + product.id">
                     <p class="mb-0">
                         {{ product.name }}
                     </p>
@@ -258,7 +259,10 @@ import 'swiper/css/pagination';
 import { Pagination, Navigation } from 'swiper/modules';
 
 import Parallax from 'parallax-js';
+import global from '~/mixins/global';
+import axios from 'axios';
 export default {
+    mixins: [global],
     components: {
         Swiper,
         SwiperSlide,
@@ -275,53 +279,23 @@ export default {
                 nextEl: '.next',
             },
             search: '',
-            products: [
-                {
-                    name: 'topdomain.kz'
-                },
-                {
-                    name: 'topdomain.kz'
-                },
-                {
-                    name: 'topdomain.kz'
-                },
-                {
-                    name: 'topdomain.kz'
-                },
-                {
-                    name: 'topdomain.kz'
-                },
-                {
-                    name: 'topdomain.kz'
-                },
-
-                {
-                    name: 'topdomain.kz'
-                },
-
-                {
-                    name: 'topdomain.kz'
-                },
-
-                {
-                    name: 'topdomain.kz'
-                },
-
-                {
-                    name: 'topdomain.kz'
-                },
-
-                {
-                    name: 'topdomain.kz'
-                },
-
-                {
-                    name: 'topdomain.kz'
-                },
-
-
-            ]
+            products: []
         }
+    },
+    methods: {
+        getPopular() {
+            const token = this.getAuthorizationCookie()
+            const path = `${this.pathUrl}/api/products/popular-product?amount_products=30`;
+            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios
+                .get(path)
+                .then(response => {
+                    this.products = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
     },
     mounted() {
         for (let i = 0; i < 5; i++) {
@@ -334,12 +308,12 @@ export default {
             document.querySelector(`#arrow${i}`).onclick = () => {
                 $(`#collapseExample${i}`).collapse("toggle");
             };
-
-
-            this.parallax = new Parallax(this.$refs.scene);
-
-
         }
+
+
+        this.getPopular()
+        this.parallax = new Parallax(this.$refs.scene);
+
     },
     beforeUnmount() {
         // Удаляем Parallax.js перед размонтированием компонента
