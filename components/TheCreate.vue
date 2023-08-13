@@ -99,8 +99,10 @@ export default {
         },
         createProduct() {
             const token = this.getAuthorizationCookie()
+            const csrf = this.getCSRFToken()
             const path = `${this.pathUrl}/api/seller/seller-lk/add-product/`
             axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios.defaults.headers.common['X-CSRFToken'] = csrf;
 
             this.$refs.createBtn.innerHTML = 'Добавляем'
 

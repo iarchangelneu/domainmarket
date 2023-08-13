@@ -139,8 +139,10 @@ export default {
         },
         createChat(id, name) {
             const token = this.getAuthorizationCookie()
+            const csrf = this.getCSRFToken()
             const path = `${this.pathUrl}/api/messanger/new-chat`
             axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios.defaults.headers.common['X-CSRFToken'] = csrf;
             axios
                 .post(path, {
                     buyer: this.myId,

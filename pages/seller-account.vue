@@ -186,8 +186,11 @@ export default {
                 .catch(error => console.log(error));
         },
         editLk() {
+            const csrf = this.getCSRFToken()
             const path = `${this.pathUrl}/api/seller/seller-lk/edit/`
+
             this.$refs.editBtn.innerHTML = 'Сохраняем'
+            axios.defaults.headers.common['X-CSRFToken'] = csrf;
             axios
                 .put(path,
                     {
@@ -234,8 +237,10 @@ export default {
         },
         createChat(id, name) {
             const token = this.getAuthorizationCookie()
+            const csrf = this.getCSRFToken()
             const path = `${this.pathUrl}/api/messanger/new-chat`
             axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+            axios.defaults.headers.common['X-CSRFToken'] = csrf;
             axios
                 .post(path, {
                     buyer: id,
