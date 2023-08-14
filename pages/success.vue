@@ -2,7 +2,7 @@
     <div class="success">
         <div class="text-center">
             <h1>ТРАНЗАКЦИЯ ПРОШЛА УСПЕШНО!</h1>
-            <NuxtLink to="/">НА ГЛАВНУЮ</NuxtLink>
+            <NuxtLink to="/" ref="onmain">НА ГЛАВНУЮ</NuxtLink>
         </div>
     </div>
 </template>
@@ -18,13 +18,20 @@ export default {
     },
     methods: {
         sendRequest(reference) {
+            this.$refs.onmain.innerHTML = 'Секундочку..'
             const token = this.getAuthorizationCookie();
             const path = `${this.pathUrl}/api/money/success/${reference}`;
             axios.defaults.headers.common['Authorization'] = `Token ${token}`;
             axios
                 .get(path)
+
                 .then(response => {
                     console.log(response)
+                    if (response.status == 201) {
+                        window.location.href = '/'
+                        this.$refs.onmain.innerHTML = 'Успешно'
+                    }
+
                 })
                 .catch(error => {
                     console.log(error);

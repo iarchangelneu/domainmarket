@@ -3,7 +3,7 @@
         <div class="text-center">
             <h1>ПРИ ПРОВЕДЕНИИ ТРАНЗАКЦИИ ПРОИЗОШЛА ОШИБКА<br>
                 ПОВТОРИТЕ ЗАПРОС ПОЗДНЕЕ</h1>
-            <NuxtLink to="/">НА ГЛАВНУЮ</NuxtLink>
+            <NuxtLink to="/" ref="onmain">НА ГЛАВНУЮ</NuxtLink>
         </div>
     </div>
 </template>
@@ -26,6 +26,11 @@ export default {
                 .get(path)
                 .then(response => {
                     console.log(response)
+                    console.log(response)
+                    if (response.status == 201) {
+                        window.location.href = '/'
+                        this.$refs.onmain.innerHTML = 'Успешно'
+                    }
                 })
                 .catch(error => {
                     console.log(error);
