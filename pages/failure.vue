@@ -26,7 +26,6 @@ export default {
                 .get(path)
                 .then(response => {
                     console.log(response)
-                    console.log(response)
                     if (response.status == 201) {
                         window.location.href = '/'
                         this.$refs.onmain.innerHTML = 'Успешно'
