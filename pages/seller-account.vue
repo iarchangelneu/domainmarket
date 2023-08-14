@@ -706,7 +706,6 @@ useSeoMeta({
 
 .account {
     padding: 120px 150px 72px;
-    height: 100vh;
 
     @media(max-width: 1500px) {
         padding: 120px 50px 50px;
