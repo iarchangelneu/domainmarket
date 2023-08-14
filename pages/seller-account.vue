@@ -569,6 +569,8 @@ useSeoMeta({
         }
 
         .catalog__item {
+            width: 476px;
+
             @media (max-width: 1100px) {
                 width: 100%;
             }
