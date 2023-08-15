@@ -284,9 +284,7 @@ export default {
     },
     methods: {
         getPopular() {
-            const token = this.getAuthorizationCookie()
             const path = `${this.pathUrl}/api/products/popular-product?amount_products=30`;
-            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
             axios
                 .get(path)
                 .then(response => {

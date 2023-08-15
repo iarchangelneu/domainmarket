@@ -178,9 +178,7 @@ export default {
             this.products = data; // Обновляем массив products с отсортированными данными
         },
         getProducts() {
-            const token = this.getAuthorizationCookie();
             const path = `${this.pathUrl}/api/products/all-product`;
-            axios.defaults.headers.common['Authorization'] = `Token ${token}`;
 
             if (this.$route.query.search) {
                 axios
