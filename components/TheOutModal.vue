@@ -29,6 +29,8 @@
                     <input type="text" class="mb-3 w-100" name="card" id="card" v-model="cardNumber"
                         :maxlength="cardNumberMaxLength" placeholder="Введите номер карты" @input="formatCardNumber"
                         autocomplete="cc-number">
+                    <input type="text" class="mb-3 w-100" name="cardHolder" id="card" v-model="cardHolder"
+                        placeholder="Введите владельца карты" autocomplete="cc-name">
                     <p>3. Введите сумму, которую Вы хотите вывести с личного счета, и нажмите на кнопку “Вывести”. Вы будете
                         переадресованы на сайт платежной системы, где сможете завершить операцию.</p>
 
@@ -60,6 +62,7 @@ export default {
             cardNumber: '',
             cardNumberMaxLength: 19,
             count: null,
+            cardHolder: '',
             pathUrl: 'https://d-market.kz',
             accountType: '',
         }
@@ -76,7 +79,8 @@ export default {
             axios
                 .post(path, {
                     amount: this.count,
-                    card_number: this.cardNumber.replace(/\s/g, '')
+                    card_number: this.cardNumber.replace(/\s/g, ''),
+                    cardholder: this.cardHolder
                 })
                 .then(response => {
                     console.log(response)
