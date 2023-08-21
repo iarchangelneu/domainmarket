@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in transactions" :key="item.id">
+                <tr v-for="item in transactions.slice().reverse()" :key="item.id">
                     <td>{{ item.type_operation }}</td>
                     <td> {{ item.amount.toLocaleString() }} ₸</td>
                     <td>{{ formatDate(item.date) }}</td>
@@ -26,7 +26,7 @@
         </table>
 
         <div class="mobtrans">
-            <div class="trans__item" v-for="item in transactions" :key="item.id">
+            <div class="trans__item" v-for="item in transactions.slice().reverse()" :key="item.id">
                 <div class="gle">
                     <div class="name">
                         <span>{{ item.type_operation }}</span>
@@ -89,7 +89,7 @@ export default {
             // Собираем строку в нужном формате
             return `${day}.${month}.${year} ${hours}:${minutes}`;
         },
-    }
+    },
 }
 </script >
 <script setup>
