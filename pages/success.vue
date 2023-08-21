@@ -40,7 +40,7 @@ export default {
     },
     mounted() {
         const url = window.location.href;
-        const match = url.match(/order_pay_domain_(\d+)/);
+        const match = url.match(/order_pay_domain_pr_(\d+)/);
 
         if (match) {
             this.extractedValue = match[0];
