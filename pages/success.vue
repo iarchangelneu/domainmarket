@@ -27,7 +27,7 @@ export default {
 
                 .then(response => {
                     console.log(response)
-                    if (response.status == 201) {
+                    if (response.status == 200) {
                         window.location.href = '/'
                         this.$refs.onmain.innerHTML = 'Успешно'
                     }
