@@ -75,7 +75,7 @@
                                 <NuxtLink to="/for-seller">Продавцу</NuxtLink>
                                 <div v-if="!isAuth">
                                     <NuxtLink to="/login">Войти</NuxtLink>
-                                    <NuxtLink to="/register">регистрация</NuxtLink>
+                                    <NuxtLink to="/register">Регистрация</NuxtLink>
                                 </div>
                                 <div v-else>
                                     <NuxtLink style="cursor: pointer;" alt="" data-toggle="modal"
@@ -114,7 +114,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center buyProduct">
-                    <button ref="buyBtn" @click="buyProduct()">перейти к оформлению</button>
+                    <button ref="buyBtn2" @click="buyProduct()">перейти к оформлению</button>
                 </div>
             </div>
 
@@ -189,25 +189,27 @@ export default {
                 .catch(error => console.log(error));
         },
         buyProduct() {
+
             const token = this.getAuthorizationCookie()
             const path = `${this.pathUrl}/api/buyer/placed-basket`
             axios.defaults.headers.common['Authorization'] = `Token ${token}`;
 
             this.$refs.buyBtn.innerHTML = 'Оформляем'
+            this.$refs.buyBtn2.innerHTML = 'Оформляем'
             axios
                 .get(path)
                 .then(response => {
                     console.log(response)
                     if (response.status == 204) {
                         this.$refs.buyBtn.innerHTML = 'Недостаточно средств'
+                        this.$refs.buyBtn2.innerHTML = 'Недостаточно средств'
                     }
                     if (response.status == 201) {
                         this.getBuyer()
                         this.getCart()
                         this.$refs.buyBtn.innerHTML = 'Оплата прошла успешно!'
+                        this.$refs.buyBtn2.innerHTML = 'Оплата прошла успешно!'
                     }
-
-                    // window.location.href = '/buyer-account'
                 })
                 .catch(error => {
                     console.error(error)
