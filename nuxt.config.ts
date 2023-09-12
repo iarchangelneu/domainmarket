@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: ['nuxt-gtag'],
 
   gtag: {
-    id: 'G-XXXXXXXXXX'
+    id: 'G-7JZ0WY3BPS'
   },
   
   app: {
