@@ -17,7 +17,7 @@
                     район Алматы, улица Қалибек Қуанышбаев,
                     дом, 15/2, кв. 111
                 </p>
-                <p>Почта поддержки : <a href="mailto:support@designmarket.kz">support@designmarket.kz</a></p>
+                <p>Почта поддержки : <a href="mailto:support@designmarket.kz">support@d-market.kz</a></p>
             </div>
         </div>
     </footer>
